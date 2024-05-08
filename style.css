@@ -266,3 +266,47 @@ ul {
 #our-menu .menu-item p {
   font-size: 16px;
 }
+
+/* footer  */
+
+footer.site-footer {
+  background: linear-gradient(135deg, #121212, #222222);
+  padding: 100px 0;
+  color: #fff;
+}
+
+footer .col-lg-3 a,
+footer .col-lg-3 ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer .col-lg-3 a:hover,
+footer .col-lg-3 ul li a:hover {
+  color: #ff8243;
+}
+
+footer .col-lg-3 {
+  text-align: center;
+}
+
+footer .col-lg-3 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .col-lg-3 ul li {
+  margin-bottom: 15px;
+}
+
+footer .col-lg-3 ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+footer .col-lg-3 ul li a:hover {
+  color: #ff8243;
+}
