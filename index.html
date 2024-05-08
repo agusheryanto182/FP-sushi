@@ -202,6 +202,15 @@
                         <li><a href="#">Saturday-Sunday: 10am-9pm</a></li>
                     </ul>
                 </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h3>
+                        <a href="#our-menu">Our Menu</a>
+                        <br>
+                        <a href="#our-offers">Our Offers</a>
+                    </h3>
+
+                </div>
             </div>
         </div>
     </footer>
@@ -219,22 +228,6 @@
 
     <!-- for custom js  -->
     <script src="main.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('nav.header-menu a[href^="#"]').click(function () {
-                var target = $(this).attr("href");
-
-                if (target.charAt(0) === "#") {
-                    $('html, body').animate({
-                        scrollTop: $(target).offset().top
-                    }, 500);
-                }
-
-                return false;
-            });
-        });
-    </script>
 </body>
 
 </html>
