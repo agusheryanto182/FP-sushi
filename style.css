@@ -430,3 +430,13 @@ footer .col-lg-3 ul li a {
 footer .col-lg-3 ul li a:hover {
   color: #ff8243;
 }
+
+b {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+}
+
+h4 {
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
