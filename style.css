@@ -462,3 +462,187 @@ h4 {
   font-size: 20px;
   font-family: "Poppins", sans-serif;
 }
+
+/* Our Team Home css  */
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Space Grotesk", sans-serif;
+  text-decoration: none;
+}
+
+.team{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(#fb9a62d7, #f2651e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.bgsec{
+  background-color: #f2651e;
+}
+
+.team-content{
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.team-content img{
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+.center h1{
+  color: #fff;
+  font-size: bold;
+  text-align: center;
+}
+.box{
+  padding: 16px;
+  background: #ffffff9f;
+  border-radius: 15px;
+  transition: all .38s ease;
+}
+.box h3{
+  font-size: 23px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.box h5{
+  font-size: 20px;
+  font-weight: 600;
+  color: #4d4c4e8b;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+}
+
+.box:hover{
+  cursor: pointer;
+  background-color: #f2651e95;
+  transform: translateY(-15px);
+}
+
+.icons i{
+  display: inline-block;
+  font-size: 20px;
+  margin: 0 8px;
+  transition: all .38s ease;
+}
+
+.icons i:hover{
+  transform: scale(1.35,1.35);
+}
+
+/* Our Team Penugasan css  */
+.task{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(#fb9a62d7, #f2651e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.agus,
+.faiz,
+.bagas,
+.ikhwan,
+.adhit{
+  padding:6rem 7% 1.4rem;
+}
+
+.agus h2,
+.faiz h2,
+.bagas h2,
+.ikhwan h2,
+.adhit h2{
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+}
+
+.agus .baris,
+.faiz .baris,
+.bagas .baris,
+.ikhwan .baris,
+.adhit .baris
+{
+  display: flex;
+}
+
+.agus .baris .tugas-img,
+.faiz .baris .tugas-img,
+.bagas .baris .tugas-img,
+.ikhwan .baris .tugas-img,
+.adhit .baris .tugas-img
+{
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex: 45rem;
+}
+
+.agus .baris .tugas-img img,
+.faiz .baris .tugas-img img,
+.bagas .baris .tugas-img img,
+.ikhwan .baris .tugas-img img,
+.adhit .baris .tugas-img img
+{
+  width: 100%;
+}
+
+.agus .baris .tugas,
+.faiz .baris .tugas,
+.bagas .baris .tugas,
+.ikhwan .baris .tugas,
+.adhit .baris .tugas
+{
+  flex: 1 1 35rem;
+  padding: 0 3rem;
+}
+
+.agus .baris .tugas h3,
+.faiz .baris .tugas h3,
+.bagas .baris .tugas h3,
+.ikhwan .baris .tugas h3,
+.adhit .baris .tugas h3
+{
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.agus .baris .tugas p,
+.faiz .baris .tugas p,
+.bagas .baris .tugas p,
+.ikhwan .baris .tugas p,
+.adhit .baris .tugas p
+{
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 125;
+  line-height: 1.6;
+}
+
+
+/* Box untuk contents css  */
+.box-contents{
+  padding: 16px;
+  background: #ff8243ae;
+  border-radius: 15px;
+  transition: all .38s ease;
+}
