@@ -464,7 +464,7 @@ h4 {
 }
 
 /* Our Team Home css  */
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -472,7 +472,7 @@ h4 {
   text-decoration: none;
 }
 
-.team{
+.team {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -483,11 +483,11 @@ h4 {
   flex-direction: column;
 }
 
-.bgsec{
+.bgsec {
   background-color: #f2651e;
 }
 
-.team-content{
+.team-content {
   width: 100%;
   max-width: 1350px;
   margin: 0 auto;
@@ -499,30 +499,30 @@ h4 {
   margin-top: 4rem;
 }
 
-.team-content img{
+.team-content img {
   width: 100%;
   height: auto;
   border-radius: 15px;
   margin-bottom: 15px;
 }
-.center h1{
+.center h1 {
   color: #fff;
   font-size: bold;
   text-align: center;
 }
-.box{
+.box {
   padding: 16px;
   background: #ffffff9f;
   border-radius: 15px;
-  transition: all .38s ease;
+  transition: all 0.38s ease;
 }
-.box h3{
+.box h3 {
   font-size: 23px;
   font-weight: 600;
   color: #fff;
   margin-bottom: 8px;
 }
-.box h5{
+.box h5 {
   font-size: 20px;
   font-weight: 600;
   color: #4d4c4e8b;
@@ -530,25 +530,25 @@ h4 {
   letter-spacing: 2px;
 }
 
-.box:hover{
+.box:hover {
   cursor: pointer;
   background-color: #f2651e95;
   transform: translateY(-15px);
 }
 
-.icons i{
+.icons i {
   display: inline-block;
   font-size: 20px;
   margin: 0 8px;
-  transition: all .38s ease;
+  transition: all 0.38s ease;
 }
 
-.icons i:hover{
-  transform: scale(1.35,1.35);
+.icons i:hover {
+  transform: scale(1.35, 1.35);
 }
 
 /* Our Team Penugasan css  */
-.task{
+.task {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -563,15 +563,15 @@ h4 {
 .faiz,
 .bagas,
 .ikhwan,
-.adhit{
-  padding:6rem 7% 1.4rem;
+.adhit {
+  padding: 6rem 7% 1.4rem;
 }
 
 .agus h2,
 .faiz h2,
 .bagas h2,
 .ikhwan h2,
-.adhit h2{
+.adhit h2 {
   text-align: center;
   font-size: 2.8rem;
   margin-bottom: 3rem;
@@ -581,8 +581,7 @@ h4 {
 .faiz .baris,
 .bagas .baris,
 .ikhwan .baris,
-.adhit .baris
-{
+.adhit .baris {
   display: flex;
 }
 
@@ -590,8 +589,7 @@ h4 {
 .faiz .baris .tugas-img,
 .bagas .baris .tugas-img,
 .ikhwan .baris .tugas-img,
-.adhit .baris .tugas-img
-{
+.adhit .baris .tugas-img {
   flex-grow: 1;
   flex-shrink: 1;
   flex: 45rem;
@@ -601,8 +599,7 @@ h4 {
 .faiz .baris .tugas-img img,
 .bagas .baris .tugas-img img,
 .ikhwan .baris .tugas-img img,
-.adhit .baris .tugas-img img
-{
+.adhit .baris .tugas-img img {
   width: 100%;
 }
 
@@ -610,8 +607,7 @@ h4 {
 .faiz .baris .tugas,
 .bagas .baris .tugas,
 .ikhwan .baris .tugas,
-.adhit .baris .tugas
-{
+.adhit .baris .tugas {
   flex: 1 1 35rem;
   padding: 0 3rem;
 }
@@ -620,8 +616,7 @@ h4 {
 .faiz .baris .tugas h3,
 .bagas .baris .tugas h3,
 .ikhwan .baris .tugas h3,
-.adhit .baris .tugas h3
-{
+.adhit .baris .tugas h3 {
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
@@ -630,19 +625,95 @@ h4 {
 .faiz .baris .tugas p,
 .bagas .baris .tugas p,
 .ikhwan .baris .tugas p,
-.adhit .baris .tugas p
-{
+.adhit .baris .tugas p {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   font-weight: 125;
   line-height: 1.6;
 }
 
-
 /* Box untuk contents css  */
-.box-contents{
+.box-contents {
   padding: 16px;
   background: #ff8243ae;
   border-radius: 15px;
-  transition: all .38s ease;
+  transition: all 0.38s ease;
+}
+
+/* form checkout */
+
+.checkouts {
+  margin-top: 100px;
+}
+
+.checkouts .py-5 {
+  margin-bottom: 30px;
+}
+
+.checkouts .row {
+  justify-content: center;
+}
+
+.checkouts .col-md-8 {
+  background: #ff9966;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0 -20px 20px #ffffff;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.checkouts form {
+  margin-top: 20px;
+}
+
+.checkouts .form-control {
+  border-radius: 15px;
+}
+
+.checkouts .form-control:focus {
+  border-color: #ff8243;
+  box-shadow: 0 0 0 0.2rem rgba(255, 130, 67, 0.25);
+}
+
+.checkouts .form-control:invalid {
+  background-image: none;
+}
+
+.checkouts .form-control.is-invalid {
+  border-color: #dc3545;
+  padding-right: calc(1.5em + 0.75rem);
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.checkouts .form-control.is-valid {
+  border-color: #28a745;
+  padding-right: calc(1.5em + 0.75rem);
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.checkouts .custom-select {
+  border-radius: 15px;
+}
+
+.checkouts .custom-select:focus {
+  border-color: #ff8243;
+  box-shadow: 0 0 0 0.2rem rgba(255, 130, 67, 0.25);
+}
+
+.checkouts .btn-lg {
+  border-radius: 15px;
+  padding: 15px 30px;
+  background: #ff8243;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.38s ease;
+}
+
+.checkouts .btn-lg:hover {
+  background: #ff9966;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 -10px 10px #ffffff;
 }
