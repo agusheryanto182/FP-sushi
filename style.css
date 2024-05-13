@@ -164,6 +164,30 @@ ul {
   color: #ff8243;
 }
 
+/* logo */
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+}
+
+.header-logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.header-logo h1 {
+  margin: 0;
+  font-size: 25px;
+  color: #ff8243;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
 /* our offers */
 #our-offers {
   padding: 100px 0;
@@ -278,12 +302,12 @@ ul {
 }
 
 #hero::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg,rgb(1, 1, 3) 3%, rgba(1, 1, 3, 0)25%);
+  background: linear-gradient(0deg, rgb(1, 1, 3) 3%, rgba(1, 1, 3, 0) 25%);
 }
 
 #hero .content {
@@ -292,14 +316,13 @@ ul {
 }
 
 #hero .content h1 {
-  font-family:monospace;
+  font-family: "poppins", sans-serif;
   font-size: 80px;
   color: #fff;
-  margin-bottom: 40px;  
+  margin-bottom: 40px;
 }
 
 #hero .content p {
-
   font-size: 17.5px;
   color: #fff;
   font-weight: 10;
@@ -316,7 +339,7 @@ ul {
   display: flex;
 }
 
-#mission .row .mission-img{
+#mission .row .mission-img {
   margin-top: 100px;
   flex: 1 1 45rem;
 }
@@ -332,16 +355,15 @@ ul {
   padding: 0 1rem;
 }
 
-#mission .row .content h3{
+#mission .row .content h3 {
   margin-top: 200px;
-  font-family:monospace;
+  font-family: "poppins", sans-serif;
   font-size: 60px;
   color: #fff;
   margin-bottom: 1rem;
-  
 }
 
-#mission .row .content p{
+#mission .row .content p {
   font-size: 25px;
   color: #a5a5a5;
   max-width: 40rem;
@@ -361,16 +383,15 @@ ul {
   padding: 10%;
   font-size: 100px;
   margin-right: 50px;
-  
 }
 
-#started .content h1{
-  font-family: monospace;
+#started .content h1 {
+  font-family: "poppins", sans-serif;
   font-size: 45px;
   font-weight: bold;
 }
 
-#started  .content p{
+#started .content p {
   font-weight: 300;
   margin-top: 50px;
   margin-bottom: 20px;
@@ -385,7 +406,7 @@ ul {
   margin-right: 200px;
   height: 500px;
   border-radius: 20px;
-  box-shadow: 1px 1px 10px rgba(1,1,3,0.5);
+  box-shadow: 1px 1px 10px rgba(1, 1, 3, 0.5);
 }
 /* footer  */
 
@@ -431,9 +452,10 @@ footer .col-lg-3 ul li a:hover {
   color: #ff8243;
 }
 
+/* our service */
 b {
   font-size: 24px;
-  font-family: "Poppins", sans-serif;
+  font-family: "poppins", sans-serif;
 }
 
 h4 {
