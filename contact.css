@@ -33,16 +33,28 @@
 }
 .container {
   width: 100%;
-  /* justify-content: center;
-    align-items: center; */
+  justify-content: space-between;
 }
 .container .contactInfo {
-  /* width: 50%; */
+  width: 45%;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: start;
 }
+
+.container .contactInfo .boxs {
+  position: relative;
+  padding: 20px 0;
+  display: flex;
+  justify-content: flex-end; /* Modified */
+}
+.container .map {
+  width: 0%;
+  margin-left: auto; /* Added */
+  margin-top: -69%;
+}
+
 .container .contactInfo .boxs {
   position: relative;
   padding: 20px 0;

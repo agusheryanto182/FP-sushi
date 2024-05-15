@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 body {
   font-family: "Poppins", sans-serif;
   text-rendering: optimizeLegibility !important;
@@ -327,7 +329,7 @@ ul {
 #hero .content p {
   font-size: 17.5px;
   color: #fff;
-  font-weight: 10;
+  font-weight: 10px;
 }
 
 #mission {
@@ -369,7 +371,7 @@ ul {
   font-size: 25px;
   color: #a5a5a5;
   max-width: 40rem;
-  font-weight: 100;
+  font-weight: 100px;
   margin-bottom: 20px;
 }
 
@@ -465,12 +467,12 @@ h4 {
   font-family: "Poppins", sans-serif;
 }
 
-/* Our Team Home css  */
+/* our team home  */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "poppins", sans-serif;
   text-decoration: none;
 }
 
@@ -549,7 +551,7 @@ h4 {
   transform: scale(1.35, 1.35);
 }
 
-/* Our Team Penugasan css  */
+/* our team penugasan  */
 .task {
   position: relative;
   width: 100%;
@@ -603,6 +605,8 @@ h4 {
 .ikhwan .baris .tugas-img img,
 .adhit .baris .tugas-img img {
   width: 100%;
+  border-radius: 15px;
+  margin-bottom: 1rem;
 }
 
 .agus .baris .tugas,
@@ -619,7 +623,7 @@ h4 {
 .bagas .baris .tugas h3,
 .ikhwan .baris .tugas h3,
 .adhit .baris .tugas h3 {
-  font-size: 2.2rem;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
 }
 
@@ -630,7 +634,7 @@ h4 {
 .adhit .baris .tugas p {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
-  font-weight: 125;
+  font-weight: 125px;
   line-height: 1.6;
 }
 
