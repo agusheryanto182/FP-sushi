@@ -11,7 +11,7 @@ Final Project Pemrograman Web !!!
 
 ## Demo
 
-You can view a live demo of the Sushi Store [here](http://ungu.in/suki-sushi).
+You can view a live demo of the Sushi Store [here](http://ungu.in/sukisushi).
 
 ## Features
 
