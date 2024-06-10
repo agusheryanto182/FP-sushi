@@ -1,7 +1,7 @@
 const Users = require('../../api/v1/users/model');
 const { BadRequestError } = require('../../errors');
 
-const CreateAdmin = async (req, res) => {
+const CreateAdmin = async (req) => {
     const { name, password, confirmPassword, role, email, phoneNumber } = req.body;
 
     if (password !== confirmPassword) {

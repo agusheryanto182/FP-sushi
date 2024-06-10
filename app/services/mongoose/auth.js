@@ -1,10 +1,13 @@
 const Users = require('../../api/v1/users/model');
-const { BadRequestError, UnauthorizedError } = require('../../errors');
-const { createTokenUser, createJWT, createRefreshJWT } = require('../../utils');
-const { createUserRefreshToken } = require('./refreshToken');
+const { BadRequestError, UnauthorizedError, InternalServerError } = require('../../errors');
+const { createTokenUser, createJWT } = require('../../utils');
 const { body, validationResult } = require('express-validator');
 const signin = async (req) => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        throw new BadRequestError('all fields are required');
+    }
 
     // validation
     await body('email').isEmail().withMessage('invalid email').run(req);
@@ -12,10 +15,6 @@ const signin = async (req) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         throw new BadRequestError(errors.array()[0].msg);
-    }
-
-    if (!email || !password) {
-        throw new BadRequestError('all fields are required');
     }
 
     const result = await Users.findOne({ email: email });
@@ -29,15 +28,12 @@ const signin = async (req) => {
     if (!isPasswordCorrect) {
         throw new UnauthorizedError('invalid credentials');
     }
-    const token = createJWT({ payload: createTokenUser(result) });
+    const token = await createJWT({ payload: createTokenUser(result) });
+    if (!token) {
+        throw new InternalServerError('failed to create token');
+    }
 
-    const refreshToken = createRefreshJWT({ payload: createTokenUser(result) });
-    await createUserRefreshToken({
-        refreshToken,
-        user: result._id,
-    });
-
-    return { token, refreshToken, role: result.role, email: result.email };
+    return { token, role: result.role, email: result.email };
 };
 
 module.exports = { signin };
