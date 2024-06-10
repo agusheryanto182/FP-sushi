@@ -1,0 +1,23 @@
+[
+  {
+    "_id": {
+      "$oid": "62cfe35e8ad11e7a5e240f28"
+    },
+    "name": "Agus Heryanto",
+    "email": "agusheryanto@gmail.com",
+    "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
+    "phone": "081234567890",
+    "address": "Jl. Raya Pahlawan No. 1",
+    "role": "admin",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    },
+    "updated_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    }
+  }
+]
