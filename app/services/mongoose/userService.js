@@ -1,7 +1,7 @@
 const { BadRequestError, ConflictError } = require('../../errors');
 const userRepo = require('../../repositories/userRepo');
 
-const CreateAdmin = async (name, password, confirmPassword, role, email, phone) => {
+const CreateAdmin = async (name, password, role, email, phone) => {
     const isEmailExist = await userRepo.CheckEmail(email);
     if (isEmailExist) {
         throw new ConflictError('email already exists');
@@ -16,7 +16,18 @@ const GetAdmin = async (name) => {
     return result;
 };
 
+const DeleteAdmin = async (id, role) => {
+    const result = await userRepo.DeleteAdmin(id, role);
+    return result;
+};
+
+const UpdateAdmin = async (id, name, password, email, phone, role) => {
+    const result = await userRepo.UpdateAdmin(id, name, password, email, phone, role);
+    return result;
+}
 module.exports = {
     CreateAdmin,
-    GetAdmin
+    GetAdmin,
+    DeleteAdmin,
+    UpdateAdmin
 };

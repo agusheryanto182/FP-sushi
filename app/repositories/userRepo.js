@@ -43,8 +43,41 @@ const GetAdmin = async (name) => {
     }
 };
 
+const DeleteAdmin = async (id, role) => {
+    try {
+        const user = await Users.findOneAndDelete({ _id: id, role: role });
+        if (!user) {
+            throw new NotFoundError('user not found');
+        }
+        return user;
+    } catch (err) {
+        if (err instanceof NotFoundError) {
+            throw err;
+        }
+        throw new InternalServerError(err);
+    }
+};
+
+const UpdateAdmin = async (id, name, password, email, phone, role) => {
+    try {
+        const user = await Users.findOneAndUpdate({ _id: id, role: role }, { name, password, email, phone });
+        if (!user) {
+            throw new NotFoundError('user not found');
+        }
+        return user;
+    } catch (err) {
+        if (err instanceof NotFoundError) {
+            throw err;
+        }
+        throw new InternalServerError(err);
+    }
+};
+
+
 module.exports = {
     Create,
     CheckEmail,
-    GetAdmin
+    GetAdmin,
+    DeleteAdmin,
+    UpdateAdmin
 }
