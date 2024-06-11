@@ -1,9 +1,6 @@
-const {
-    CreateAdmin
-} = require('../../../services/mongoose/userService');
-
+const userService = require('../../../services/mongoose/userService');
 const { StatusCodes } = require('http-status-codes');
-const { body, validationResult } = require('express-validator');
+const { body, param, validationResult } = require('express-validator');
 const customError = require('../../../errors');
 
 const createAdminCms = async (req, res, next) => {
@@ -29,7 +26,7 @@ const createAdminCms = async (req, res, next) => {
     }
 
     try {
-        const result = await CreateAdmin(req);
+        const result = await userService.CreateAdmin(req);
 
         res.status(StatusCodes.CREATED).json({
             data: result,
@@ -39,6 +36,25 @@ const createAdminCms = async (req, res, next) => {
     }
 };
 
+const GetAdminCMS = async (req, res, next) => {
+    const { name } = req.params;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new customError.BadRequestError(errors.array()[0].msg);
+    }
+
+    try {
+        const result = await userService.GetAdmin(name);
+        res.status(StatusCodes.OK).json({
+            data: result
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     createAdminCms,
+    GetAdminCMS
 };

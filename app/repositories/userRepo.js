@@ -9,7 +9,7 @@ const Create = async ({ name, email, password, phone, role }) => {
     } catch (err) {
         throw new InternalServerError(err);
     }
-}
+};
 
 const CheckEmail = async (email) => {
     try {
@@ -18,18 +18,18 @@ const CheckEmail = async (email) => {
     } catch (err) {
         throw new InternalServerError(err);
     }
-}
+};
 
 const GetAdmin = async (name) => {
     try {
         let query;
         if (name) {
-            query = { name, role: 'admin' };
+            query = { name: { $regex: '^' + name, $options: 'i' }, role: 'admin' };
         } else {
             query = { role: 'admin' };
         }
 
-        const user = await Users.findOne(query);
+        const user = await Users.find(query);
 
         if (!user) {
             throw new NotFoundError('user not found');
@@ -41,7 +41,7 @@ const GetAdmin = async (name) => {
         }
         throw new InternalServerError(err);
     }
-}
+};
 
 module.exports = {
     Create,

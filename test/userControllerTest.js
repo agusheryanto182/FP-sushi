@@ -1,6 +1,8 @@
 const sinon = require("sinon");
 const { faker } = require('@faker-js/faker');
 const userController = require('../app/api/v1/users/controller');
+const Users = require('../app/api/v1/users/model');
+const assert = require('assert');
 
 let chai;
 let expect;

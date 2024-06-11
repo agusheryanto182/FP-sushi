@@ -71,31 +71,52 @@ describe('user service : create admin', () => {
 
 describe('user service : get admin', () => {
 
-    const stubValue = {
-        id: faker.string.uuid(),
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        phone: "01234567890",
-        role: 'admin'
-    };
-
-    const req = {
-        params: {
-            name: stubValue.name
+    const stubValue = [
+        {
+            id: faker.string.uuid(),
+            name: faker.person.fullName(),
+            email: faker.internet.email(),
+            password: faker.internet.password(),
+            phone: "01234567890",
+            role: 'admin'
+        },
+        {
+            id: faker.string.uuid(),
+            name: faker.person.fullName(),
+            email: faker.internet.email(),
+            password: faker.internet.password(),
+            phone: "01234567890",
+            role: 'admin'
         }
-    }
+    ];
+
 
     let getAdminStub;
     beforeEach(function () {
-        getAdminStub = sinon.stub(Users, 'findOne');
+        getAdminStub = sinon.stub(Users, 'find');
     });
 
     afterEach(function () {
         getAdminStub.restore();
     });
 
-    it('should success when get admin', async () => {
+    it('should success when get admin without param name', async () => {
+        const req = {
+            params: {
+                name: ''
+            }
+        }
+        getAdminStub.resolves(stubValue);
+        const result = await userService.GetAdmin(req);
+        expect(result).to.deep.equal(stubValue);
+    });
+
+    it('should success when get admin with param name', async () => {
+        const req = {
+            params: {
+                name: stubValue.name
+            }
+        }
         getAdminStub.resolves(stubValue);
         const result = await userService.GetAdmin(req);
         expect(result).to.deep.equal(stubValue);
