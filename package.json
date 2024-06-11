@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha --timeout 20000",
+    "test": "mocha  test/ --slow 0 --recursive --exit",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
@@ -25,6 +25,7 @@
     "chai": "^5.1.1",
     "chai-http": "^5.0.0",
     "mocha": "^10.4.0",
+    "mocha-slow-reporter": "^0.0.1",
     "request": "^2.88.2",
     "sinon": "^18.0.0"
   }

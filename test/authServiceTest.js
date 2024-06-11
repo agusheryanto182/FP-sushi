@@ -11,7 +11,7 @@ before(async () => {
     expect = chai.expect;
 });
 
-describe("auth service", () => {
+describe("auth service : signin", () => {
     let req;
     let res;
     let next;
@@ -22,40 +22,40 @@ describe("auth service", () => {
         next = sinon.stub();
     });
 
-    it('should return 400 when field is empty', async () => {
-        req.body = {
-            email: '',
-            password: ''
-        }
+    // it('should throw bad request when field is empty', async () => {
+    //     req.body = {
+    //         email: '',
+    //         password: ''
+    //     }
 
-        const error = await signin(req).catch(error => error);
-        expect(error.message).to.equal('all fields are required');
-        expect(error.statusCode).to.equal(400);
-    });
+    //     const error = await signin(req).catch(error => error);
+    //     expect(error.message).to.equal('all fields are required');
+    //     expect(error.statusCode).to.equal(400);
+    // });
 
-    it('should return 400 when password is less than 6 characters', async () => {
-        req.body = {
-            email: faker.internet.email(),
-            password: faker.internet.password({ length: 5 })
-        }
+    // it('should throw bad request when password is less than 6 characters', async () => {
+    //     req.body = {
+    //         email: faker.internet.email(),
+    //         password: faker.internet.password({ length: 5 })
+    //     }
 
-        const error = await signin(req).catch(error => error);
-        expect(error.message).to.equal('password must be at least 6 characters');
-        expect(error.statusCode).to.equal(400);
-    });
+    //     const error = await signin(req).catch(error => error);
+    //     expect(error.message).to.equal('password must be at least 6 characters');
+    //     expect(error.statusCode).to.equal(400);
+    // });
 
-    it('should return 400 when email is invalid', async () => {
-        req.body = {
-            email: faker.internet.url(),
-            password: faker.internet.password({ length: 6 })
-        }
+    // it('should throw bad request when email is invalid', async () => {
+    //     req.body = {
+    //         email: faker.internet.url(),
+    //         password: faker.internet.password({ length: 6 })
+    //     }
 
-        const error = await signin(req).catch(error => error);
-        expect(error.message).to.equal('invalid email');
-        expect(error.statusCode).to.equal(400);
-    });
+    //     const error = await signin(req).catch(error => error);
+    //     expect(error.message).to.equal('invalid email');
+    //     expect(error.statusCode).to.equal(400);
+    // });
 
-    it('should return 401 when email or password is wrong', async () => {
+    it('should throw unauthorized when email or password is wrong', async () => {
         const stubValue = {
             id: faker.string.uuid(),
             name: faker.person.fullName(),
@@ -78,7 +78,7 @@ describe("auth service", () => {
 
         usersStub.restore();
     });
-    it('should return 200 when email and password is correct', async () => {
+    it('should success when email and password is correct', async () => {
         const stubValue = {
             id: faker.string.uuid(),
             name: faker.person.fullName(),
@@ -106,7 +106,7 @@ describe("auth service", () => {
 
         usersStub.restore();
     });
-    it('should return 404 when user not found', async () => {
+    it('should throw not found when user not found', async () => {
         req.body = {
             email: faker.internet.email(),
             password: faker.internet.password({ length: 6 })

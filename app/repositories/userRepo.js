@@ -20,7 +20,31 @@ const CheckEmail = async (email) => {
     }
 }
 
+const GetAdmin = async (name) => {
+    try {
+        let query;
+        if (name) {
+            query = { name, role: 'admin' };
+        } else {
+            query = { role: 'admin' };
+        }
+
+        const user = await Users.findOne(query);
+
+        if (!user) {
+            throw new NotFoundError('user not found');
+        }
+        return user;
+    } catch (err) {
+        if (err instanceof NotFoundError) {
+            throw err;
+        }
+        throw new InternalServerError(err);
+    }
+}
+
 module.exports = {
     Create,
-    CheckEmail
+    CheckEmail,
+    GetAdmin
 }
