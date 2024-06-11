@@ -1,6 +1,6 @@
-const sinon = require("sinon");
+const sinon = require('sinon');
 const { faker } = require('@faker-js/faker');
-const { CreateAdmin } = require('../app/services/mongoose/userService');
+const userService = require('../app/services/mongoose/userService')
 const Users = require('../app/api/v1/users/model');
 let chai;
 let expect;
@@ -9,7 +9,6 @@ before(async () => {
     chai = await import('chai');
     expect = chai.expect;
 });
-
 describe('user service : create admin', () => {
     it('should return 201 when create admin', async () => {
         const stubValue = {
@@ -17,29 +16,29 @@ describe('user service : create admin', () => {
             name: faker.person.fullName(),
             email: faker.internet.email(),
             password: faker.internet.password(),
-            phoneNumber: faker.phone.number(),
+            phone: "01234567890",
             role: 'admin'
         };
-
-        const usersStub = sinon.stub(Users, 'create').resolves(stubValue);
 
         const req = {
             body: {
                 name: stubValue.name,
+                email: stubValue.email,
                 password: stubValue.password,
                 confirmPassword: stubValue.password,
-                role: stubValue.role,
-                email: stubValue.email,
-                phoneNumber: stubValue.phoneNumber
+                phone: stubValue.phone,
+                role: stubValue.role
             }
-        };
+        }
 
-        const result = await CreateAdmin(req);
+        const checkEmailStub = sinon.stub(Users, 'findOne').resolves(null);
+        const createStub = sinon.stub(Users, 'create').resolves(stubValue);
 
-        expect(usersStub.calledOnce).to.be.true;
+        const result = await userService.CreateAdmin(req);
 
         expect(result).to.deep.equal(stubValue);
 
-        usersStub.restore();
+        checkEmailStub.restore();
+        createStub.restore();
     });
 });

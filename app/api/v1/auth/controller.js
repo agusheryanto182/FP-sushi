@@ -1,4 +1,4 @@
-const { signin } = require('../../../services/mongoose/auth');
+const { signin } = require('../../../services/mongoose/authService');
 
 const { StatusCodes } = require('http-status-codes');
 

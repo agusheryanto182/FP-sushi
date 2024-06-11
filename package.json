@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 20000",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },

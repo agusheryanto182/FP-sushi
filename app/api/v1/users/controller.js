@@ -1,6 +1,6 @@
 const {
     CreateAdmin
-} = require('../../../services/mongoose/users');
+} = require('../../../services/mongoose/userService');
 
 const { StatusCodes } = require('http-status-codes');
 
