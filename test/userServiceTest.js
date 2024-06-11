@@ -1,6 +1,6 @@
 const sinon = require("sinon");
 const { faker } = require('@faker-js/faker');
-const { CreateAdmin } = require('../app/services/mongoose/users');
+const { CreateAdmin } = require('../app/services/mongoose/userService');
 const Users = require('../app/api/v1/users/model');
 let chai;
 let expect;
@@ -11,7 +11,7 @@ before(async () => {
 });
 
 describe('user service : create admin', () => {
-    it('should create an admin', async () => {
+    it('should return 201 when create admin', async () => {
         const stubValue = {
             id: faker.string.uuid(),
             name: faker.person.fullName(),

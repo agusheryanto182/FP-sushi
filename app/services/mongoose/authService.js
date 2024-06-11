@@ -1,7 +1,7 @@
-const Users = require('../../api/v1/users/model');
 const { BadRequestError, UnauthorizedError, InternalServerError } = require('../../errors');
 const { createTokenUser, createJWT } = require('../../utils');
 const { body, validationResult } = require('express-validator');
+const { GetUserByEmail } = require('../../repositories/authRepo');
 const signin = async (req) => {
     const { email, password } = req.body;
 
@@ -17,11 +17,7 @@ const signin = async (req) => {
         throw new BadRequestError(errors.array()[0].msg);
     }
 
-    const result = await Users.findOne({ email: email });
-
-    if (!result) {
-        throw new UnauthorizedError('invalid credentials');
-    }
+    const result = await GetUserByEmail(email);
 
     const isPasswordCorrect = await result.comparePassword(password);
 
