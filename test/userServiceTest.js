@@ -122,3 +122,118 @@ describe('user service : get admin', () => {
         expect(result).to.deep.equal(stubValue);
     });
 });
+
+
+describe('user service : delete admin', () => {
+
+    const stubValue = {
+        id: faker.string.uuid(),
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        phone: "01234567890",
+        role: 'admin'
+    };
+
+
+    let deleteAdminStub;
+    beforeEach(function () {
+        deleteAdminStub = sinon.stub(Users, 'findOneAndDelete');
+    });
+
+    afterEach(function () {
+        deleteAdminStub.restore();
+    });
+
+    it('should success when delete admin', async () => {
+        const req = {
+            params: {
+                id: stubValue.id,
+                role: 'admin'
+            }
+        }
+        deleteAdminStub.resolves(stubValue);
+        const result = await userService.DeleteAdmin(req);
+        expect(result).to.deep.equal(stubValue);
+    });
+
+
+    it('should throw not found error when admin not found', async () => {
+        const req = {
+            params: {
+                id: stubValue.id,
+                role: 'admin'
+            }
+        }
+        deleteAdminStub.resolves(null);
+        try {
+            await userService.DeleteAdmin(req);
+        } catch (err) {
+            expect(err.message).to.equal('user not found');
+            expect(err.statusCode).to.equal(404);
+        }
+    });
+});
+
+describe('user service : update admin', () => {
+    const stubValue = {
+        id: faker.string.uuid(),
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        phone: "01234567890",
+        role: 'admin'
+    };
+    const req = {
+        params: {
+            id: stubValue.id,
+            role: 'admin'
+        },
+        body: {
+            name: stubValue.name,
+            email: stubValue.email,
+            password: stubValue.password,
+            confirmPassword: stubValue.password,
+            phone: stubValue.phone
+        }
+    }
+    let updateAdminStub;
+    beforeEach(function () {
+        getUserByEmail = sinon.stub(Users, 'findOne');
+        updateAdminStub = sinon.stub(Users, 'findOneAndUpdate');
+    });
+
+    afterEach(function () {
+        getUserByEmail.restore();
+        updateAdminStub.restore();
+    });
+
+    it('should success when update admin', async () => {
+        getUserByEmail.resolves(null);
+        updateAdminStub.resolves(stubValue);
+        const result = await userService.UpdateAdmin(req);
+        expect(result).to.deep.equal(stubValue);
+    });
+
+    it('should throw not found error when admin not found', async () => {
+        getUserByEmail.resolves(null);
+        updateAdminStub.resolves(null);
+        try {
+            await userService.UpdateAdmin(req);
+        } catch (err) {
+            expect(err.message).to.equal('user not found');
+            expect(err.statusCode).to.equal(404);
+        }
+    });
+
+    it('should throw conflict error when email already exists', async () => {
+        getUserByEmail.resolves(stubValue);
+        updateAdminStub.resolves(null);
+        try {
+            await userService.UpdateAdmin(req);
+        } catch (err) {
+            expect(err.message).to.equal('email already exists');
+            expect(err.statusCode).to.equal(409);
+        }
+    });
+});

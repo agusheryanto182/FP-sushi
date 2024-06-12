@@ -1,10 +1,10 @@
-const { BadRequestError, ConflictError } = require('../../errors');
+const customError = require('../../errors');
 const userRepo = require('../../repositories/userRepo');
 
 const CreateAdmin = async (name, password, role, email, phone) => {
     const isEmailExist = await userRepo.CheckEmail(email);
     if (isEmailExist) {
-        throw new ConflictError('email already exists');
+        throw new customError.ConflictError('email already exists');
     }
     const result = await userRepo.Create({ name, password, role, email, phone });
 
@@ -24,7 +24,7 @@ const DeleteAdmin = async (id, role) => {
 const UpdateAdmin = async (id, name, password, email, phone, role) => {
     const isEmailExist = await userRepo.GetUserByEmail(email, role);
     if (isEmailExist && isEmailExist.id !== id) {
-        throw new BadRequestError('email already exists');
+        throw new customError.ConflictError('email already exists');
     }
 
     const result = await userRepo.UpdateAdmin(id, name, password, email, phone, role);
