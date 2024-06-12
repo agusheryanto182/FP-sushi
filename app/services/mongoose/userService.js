@@ -22,9 +22,15 @@ const DeleteAdmin = async (id, role) => {
 };
 
 const UpdateAdmin = async (id, name, password, email, phone, role) => {
+    const isEmailExist = await userRepo.GetUserByEmail(email, role);
+    if (isEmailExist && isEmailExist.id !== id) {
+        throw new BadRequestError('email already exists');
+    }
+
     const result = await userRepo.UpdateAdmin(id, name, password, email, phone, role);
     return result;
-}
+};
+
 module.exports = {
     CreateAdmin,
     GetAdmin,

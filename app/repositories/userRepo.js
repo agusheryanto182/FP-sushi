@@ -73,11 +73,27 @@ const UpdateAdmin = async (id, name, password, email, phone, role) => {
     }
 };
 
+const GetUserByEmail = async (email, role) => {
+    try {
+        const user = await Users.findOne({ email, role });
+        if (!user) {
+            throw new NotFoundError('user not found', 404);
+        }
+        return user;
+    } catch (err) {
+        if (err instanceof NotFoundError) {
+            throw err;
+        }
+        throw new InternalServerError(err);
+    }
+};
+
 
 module.exports = {
     Create,
     CheckEmail,
     GetAdmin,
     DeleteAdmin,
-    UpdateAdmin
+    UpdateAdmin,
+    GetUserByEmail
 }
