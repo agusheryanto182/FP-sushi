@@ -12,56 +12,118 @@ before(async () => {
     expect = chai.expect;
 });
 
-describe("user controller : create admin", () => {
-    let req;
-    let res;
-    let next;
+describe('user controller', () => {
+    describe("create admin", () => {
+        let req;
+        let res;
+        let next;
 
-    beforeEach(() => {
-        req = {};
-        res = {};
-        next = sinon.stub();
+        beforeEach(() => {
+            req = {};
+            res = {};
+            next = sinon.stub();
+        });
+
+        it('should throw bad request when field is empty', async () => {
+            req.body = {
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                phone: '',
+            }
+
+            const error = await userController.createAdminCms(req).catch(error => error);
+            expect(error.message).to.equal('all fields are required');
+            expect(error.statusCode).to.equal(400);
+        });
+
+        it('should throw bad request when password is less than 6 characters', async () => {
+            req.body = {
+                name: faker.person.fullName(),
+                email: faker.internet.email(),
+                password: faker.internet.password({ length: 5 }),
+                confirmPassword: faker.internet.password({ length: 5 }),
+                phone: faker.phone.number()
+            }
+
+            const error = await userController.createAdminCms(req).catch(error => error);
+            expect(error.message).to.equal('password must be at least 6 characters');
+            expect(error.statusCode).to.equal(400);
+        });
+
+        it('should throw bad request when email is invalid', async () => {
+            req.body = {
+                name: faker.person.fullName(),
+                email: faker.internet.url,
+                password: faker.internet.password({ length: 6 }),
+                confirmPassword: faker.internet.password({ length: 6 }),
+                phone: faker.phone.number()
+            }
+
+            const error = await userController.createAdminCms(req).catch(error => error);
+            expect(error.message).to.equal('invalid email');
+            expect(error.statusCode).to.equal(400);
+        });
     });
 
-    it('should throw bad request when field is empty', async () => {
-        req.body = {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            phone: '',
-        }
 
-        const error = await userController.createAdminCms(req).catch(error => error);
-        expect(error.message).to.equal('all fields are required');
-        expect(error.statusCode).to.equal(400);
+    describe('get admin', () => {
+        let req;
+        let res;
+        let next;
+
+        beforeEach(() => {
+            req = {};
+            res = {};
+            next = sinon.stub();
+            getAdmin = sinon.stub(Users, 'find');
+        });
+
+        afterEach(() => {
+            getAdmin.restore();
+        });
+
+        it('should return 200 when get admin', async () => {
+            req.params = {
+                name: faker.person.fullName()
+            }
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns(res);
+            getAdmin.resolves({});
+            await userController.GetAdminCMS(req, res, next);
+            expect(res.status.calledWith(200)).to.be.true;
+        });
     });
 
-    it('should throw bad request when password is less than 6 characters', async () => {
-        req.body = {
-            name: faker.person.fullName(),
-            email: faker.internet.email(),
-            password: faker.internet.password({ length: 5 }),
-            confirmPassword: faker.internet.password({ length: 5 }),
-            phone: faker.phone.number()
-        }
 
-        const error = await userController.createAdminCms(req).catch(error => error);
-        expect(error.message).to.equal('password must be at least 6 characters');
-        expect(error.statusCode).to.equal(400);
-    });
+    describe('delete admin', () => {
+        let req;
+        let res;
+        let next;
 
-    it('should throw bad request when email is invalid', async () => {
-        req.body = {
-            name: faker.person.fullName(),
-            email: faker.internet.url,
-            password: faker.internet.password({ length: 6 }),
-            confirmPassword: faker.internet.password({ length: 6 }),
-            phone: faker.phone.number()
-        }
+        beforeEach(() => {
+            req = {};
+            res = {};
+            next = sinon.stub();
+            deleteAdmin = sinon.stub(Users, 'findOneAndDelete');
+        });
 
-        const error = await userController.createAdminCms(req).catch(error => error);
-        expect(error.message).to.equal('invalid email');
-        expect(error.statusCode).to.equal(400);
+        afterEach(() => {
+            deleteAdmin.restore();
+        });
+
+        it('should return 200 when delete admin', async () => {
+            req.params = {
+                id: faker.string.uuid(),
+                role: 'admin'
+            }
+            res.status = sinon.stub().returns(res);
+            res.json = sinon.stub().returns(res);
+            deleteAdmin.resolves({});
+            await userController.DeleteAdminCMS(req, res, next);
+            expect(res.status.calledWith(200)).to.be.true;
+        });
     });
 });
+

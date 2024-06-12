@@ -38,11 +38,6 @@ const createAdminCms = async (req, res, next) => {
 
 const GetAdminCMS = async (req, res, next) => {
     const { name } = req.params;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        throw new customError.BadRequestError(errors.array()[0].msg);
-    }
-
     try {
         const result = await userService.GetAdmin(name);
         res.status(StatusCodes.OK).json({
@@ -55,11 +50,6 @@ const GetAdminCMS = async (req, res, next) => {
 
 const DeleteAdminCMS = async (req, res, next) => {
     const { id } = req.params;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        throw new customError.BadRequestError(errors.array()[0].msg);
-    }
-
     try {
         const result = await userService.DeleteAdmin(id, 'admin');
         res.status(StatusCodes.OK).json({
