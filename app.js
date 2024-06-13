@@ -9,6 +9,7 @@ const app = express();
 // router
 const authCMSRouter = require('./app/api/v1/auth/router');
 const usersCMSRouter = require('./app/api/v1/users/router');
+const productsCMSRouter = require('./app/api/v1/products/router');
 
 const v1 = '/api/v1';
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use(`${v1}/cms`, authCMSRouter);
 app.use(`${v1}/cms`, usersCMSRouter);
+app.use(`${v1}/cms`, productsCMSRouter);
 
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);

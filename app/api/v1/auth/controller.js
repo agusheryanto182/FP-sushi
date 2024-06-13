@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const customError = require('../../../errors');
 
 const signinCms = async (req, res, next) => {
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -19,7 +20,7 @@ const signinCms = async (req, res, next) => {
     }
 
     try {
-        const result = await authService.signin(req);
+        const result = await authService.signin(email, password);
 
         res.status(StatusCodes.OK).json({
             data: result,

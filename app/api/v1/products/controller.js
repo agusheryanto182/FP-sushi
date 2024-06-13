@@ -1,6 +1,6 @@
 const customError = require('../../../errors');
 const productService = require('../../../services/mongoose/productService');
-const { body, param, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 
 const createProductCms = async (req, res, next) => {

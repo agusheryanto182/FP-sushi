@@ -14,7 +14,16 @@ const Create = async ({ name, email, password, phone, role }) => {
 const CheckEmail = async (email) => {
     try {
         const user = await Users.findOne({ email });
-        return user !== null;
+        return user
+    } catch (err) {
+        throw new customError.InternalServerError(err);
+    }
+};
+
+const CheckPhone = async (phone, role) => {
+    try {
+        const user = await Users.findOne({ phone, role });
+        return user
     } catch (err) {
         throw new customError.InternalServerError(err);
     }
@@ -24,24 +33,19 @@ const GetAdmin = async (name) => {
     try {
         let query;
         if (name) {
-            query = { name: { $regex: '^' + name, $options: 'i' }, role: 'admin' };
+            query = { name: { $regex: name, $options: 'i' }, role: 'admin' };
         } else {
             query = { role: 'admin' };
         }
 
-        const user = await Users.find(query);
+        const user = await Users.find(query).sort({ createdAt: -1 });
 
-        if (!user) {
-            throw new customError.NotFoundError('user not found');
-        }
         return user;
     } catch (err) {
-        if (err instanceof customError.NotFoundError) {
-            throw err;
-        }
         throw new customError.InternalServerError(err);
     }
 };
+
 
 const DeleteAdmin = async (id, role) => {
     try {
@@ -58,9 +62,9 @@ const DeleteAdmin = async (id, role) => {
     }
 };
 
-const UpdateAdmin = async (id, name, password, email, phone, role) => {
+const UpdateAdmin = async (id, name, email, password, phone, role) => {
     try {
-        const user = await Users.findOneAndUpdate({ _id: id, role: role }, { name, password, email, phone });
+        const user = await Users.findOneAndUpdate({ _id: id, role: role }, { name, email, password, phone });
         if (!user) {
             throw new customError.NotFoundError('user not found');
         }
@@ -89,5 +93,6 @@ module.exports = {
     GetAdmin,
     DeleteAdmin,
     UpdateAdmin,
-    GetUserByEmail
+    GetUserByEmail,
+    CheckPhone
 }
