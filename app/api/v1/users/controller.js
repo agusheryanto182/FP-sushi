@@ -6,14 +6,6 @@ const customError = require('../../../errors');
 const createAdminCms = async (req, res, next) => {
     const { name, email, password, confirmPassword, phone } = req.body;
 
-    try {
-        if (!name || !email || !password || !confirmPassword || !phone) {
-            throw new customError.BadRequestError('all fields are required');
-        }
-
-    } catch (err) {
-        next(err);
-    }
     // validation
     await body('name').isString().withMessage('name must be a string').run(req);
     await body('password').isLength({ min: 6 }).withMessage('password must be at least 6 characters').run(req);
@@ -22,6 +14,9 @@ const createAdminCms = async (req, res, next) => {
     await body('phone').isMobilePhone().withMessage('invalid phone number').run(req);
     const errors = validationResult(req);
     try {
+        if (!name || !email || !password || !confirmPassword || !phone) {
+            throw new customError.BadRequestError('all fields are required');
+        }
 
         if (!errors.isEmpty()) {
             throw new customError.BadRequestError(errors.array()[0].msg);

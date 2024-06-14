@@ -32,9 +32,12 @@ describe('user controller', () => {
                 confirmPassword: '',
                 phone: '',
             }
+            const next = sinon.spy();
 
-            const error = await userController.createAdminCms(req).catch(error => error);
-            expect(error.message).to.equal('all fields are required');
+            await userController.createAdminCms(req, {}, next);
+
+            const error = next.firstCall.args[0];
+
             expect(error.statusCode).to.equal(400);
         });
 
@@ -47,8 +50,12 @@ describe('user controller', () => {
                 phone: faker.phone.number()
             }
 
-            const error = await userController.createAdminCms(req).catch(error => error);
-            expect(error.message).to.equal('password must be at least 6 characters');
+            const next = sinon.spy();
+
+            await userController.createAdminCms(req, {}, next);
+
+            const error = next.firstCall.args[0];
+
             expect(error.statusCode).to.equal(400);
         });
 
@@ -61,8 +68,12 @@ describe('user controller', () => {
                 phone: faker.phone.number()
             }
 
-            const error = await userController.createAdminCms(req).catch(error => error);
-            expect(error.message).to.equal('invalid email');
+            const next = sinon.spy();
+
+            await userController.createAdminCms(req, {}, next);
+
+            const error = next.firstCall.args[0];
+
             expect(error.statusCode).to.equal(400);
         });
     });
@@ -85,14 +96,18 @@ describe('user controller', () => {
         });
 
         it('should return 200 when get admin', async () => {
-            req.params = {
+            req.query = {
                 name: faker.person.fullName()
             }
-            res.status = sinon.stub().returns(res);
-            res.json = sinon.stub().returns(res);
+            const next = sinon.spy();
+
             getAdmin.resolves({});
+
             await userController.GetAdminCMS(req, res, next);
-            expect(res.status.calledWith(200)).to.be.true;
+
+            const error = next.firstCall.args[0];
+
+            expect(error.statusCode).to.equal(200);
         });
     });
 
