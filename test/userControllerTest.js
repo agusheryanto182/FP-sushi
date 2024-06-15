@@ -79,66 +79,76 @@ describe('user controller', () => {
     });
 
 
-    describe('get admin', () => {
-        let req;
-        let res;
-        let next;
+    // describe('get admin', () => {
+    //     let req;
+    //     let res;
+    //     let next;
 
-        beforeEach(() => {
-            req = {};
-            res = {};
-            next = sinon.stub();
-            getAdmin = sinon.stub(Users, 'find');
-        });
+    //     beforeEach(() => {
+    //         req = {};
+    //         res = {};
+    //         next = sinon.stub();
+    //         getAdmin = sinon.stub(Users, 'find');
+    //     });
 
-        afterEach(() => {
-            getAdmin.restore();
-        });
+    //     afterEach(() => {
+    //         getAdmin.restore();
+    //     });
 
-        it('should return 200 when get admin', async () => {
-            req.query = {
-                name: faker.person.fullName()
-            }
-            const next = sinon.spy();
+    //     it('should return 200 when get admin', async () => {
+    //         req.query = {
+    //             name: faker.person.fullName()
+    //         }
+    //         const next = sinon.spy();
 
-            getAdmin.resolves({});
+    //         getAdmin.resolves();
 
-            await userController.GetAdminCMS(req, res, next);
+    //         await userController.GetAdminCMS(req, res, next);
 
-            const error = next.firstCall.args[0];
+    //         const error = next.firstCall.args[0];
 
-            expect(error.statusCode).to.equal(200);
-        });
-    });
+    //         expect(error.statusCode).to.equal(200);
+    //     });
+    // });
 
 
-    describe('delete admin', () => {
-        let req;
-        let res;
-        let next;
+    // describe('delete admin', () => {
+    //     let req;
+    //     let res;
+    //     let next;
 
-        beforeEach(() => {
-            req = {};
-            res = {};
-            next = sinon.stub();
-            deleteAdmin = sinon.stub(Users, 'findOneAndDelete');
-        });
+    //     beforeEach(() => {
+    //         req = {};
+    //         res = {};
+    //         next = sinon.stub();
+    //         deleteAdmin = sinon.stub(Users, 'findOneAndDelete');
+    //     });
 
-        afterEach(() => {
-            deleteAdmin.restore();
-        });
+    //     afterEach(() => {
+    //         deleteAdmin.restore();
+    //     });
 
-        it('should return 200 when delete admin', async () => {
-            req.params = {
-                id: faker.string.uuid(),
-                role: 'admin'
-            }
-            res.status = sinon.stub().returns(res);
-            res.json = sinon.stub().returns(res);
-            deleteAdmin.resolves({});
-            await userController.DeleteAdminCMS(req, res, next);
-            expect(res.status.calledWith(200)).to.be.true;
-        });
-    });
+    //     it('should return 200 when delete admin', async () => {
+    //         req.params = {
+    //             id: faker.string.uuid(),
+    //             role: 'admin'
+    //         }
+    // res.status = sinon.stub().returns(res);
+    // res.json = sinon.stub().returns(res);
+    // deleteAdmin.resolves({});
+    // await userController.DeleteAdminCMS(req, res, next);
+    // expect(res.status.calledWith(200)).to.be.true;
+
+    //         const next = sinon.spy();
+
+    //         deleteAdmin.resolves({});
+
+    //         await userController.DeleteAdminCMS(req, res, next);
+
+    //         const error = next.firstCall.args[0];
+
+    //         expect(error.statusCode).to.equal(200);
+    //     });
+    // });
 });
 

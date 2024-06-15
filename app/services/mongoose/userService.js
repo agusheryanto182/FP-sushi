@@ -1,5 +1,6 @@
 const customError = require('../../errors');
 const userRepo = require('../../repositories/userRepo');
+const bcrypt = require('bcryptjs');
 
 const CreateAdmin = async (name, email, password, phone) => {
     const isEmailExist = await userRepo.CheckEmail(email);
@@ -46,6 +47,10 @@ const UpdateAdmin = async (id, name, email, password, phone, role) => {
     const isPhoneExist = await userRepo.CheckPhone(phone, role);
     if (isPhoneExist && isPhoneExist.id !== id) {
         throw new customError.ConflictError('phone already exists');
+    }
+
+    if (password) {
+        password = await bcrypt.hash(password, 10);
     }
 
     const result = await userRepo.UpdateAdmin(id, name, email, password, phone, role);
