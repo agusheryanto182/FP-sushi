@@ -1,34 +1,46 @@
 const customError = require('../../../errors');
 const productService = require('../../../services/mongoose/productService');
 const { body, validationResult } = require('express-validator');
+const imageService = require('../../../services/mongoose/imagesService');
 
 
 const createProductCms = async (req, res, next) => {
-    const { name, price, category, imageUrl } = req.body;
-    if (!name || !price || !category || !imageUrl) {
-        throw new customError.BadRequestError('all fields are required');
-    }
-
-    if (price <= 0) {
-        throw new customError.BadRequestError('price must be greater than 0');
-    }
-
-    if (category !== 'food' && category !== 'drink') {
-        throw new customError.BadRequestError('category must be food or drink');
-    }
-
+    const { name, price, category } = req.body;
     // validation
     await body('name').isString().withMessage('name must be a string').run(req);
     await body('price').isNumeric().withMessage('price must be a number').run(req);
     await body('category').isString().withMessage('category must be a string').run(req);
-    await body('imageUrl').isString().withMessage('imageUrl must be a string').run(req);
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        throw new customError.BadRequestError(errors.array()[0].msg);
+
+
+    try {
+        if (!name || !price || !category) {
+            throw new customError.BadRequestError('all fields are required');
+        }
+
+        if (price <= 0) {
+            throw new customError.BadRequestError('price must be greater than 0');
+        }
+
+        if (category !== 'food' && category !== 'drink') {
+            throw new customError.BadRequestError('category must be food or drink');
+        }
+
+        if (!errors.isEmpty()) {
+            throw new customError.BadRequestError(errors.array()[0].msg);
+        }
+    } catch (err) {
+        next(err);
     }
 
     try {
-        const result = await productService.CreateProduct(req);
+        const resultImages = await imageService.generateUrlImage({ file: req.file });
+
+        if (!resultImages) {
+            throw new customError.InternalServerError('failed to upload image');
+        }
+
+        const result = await productService.CreateProduct(name, price, category, resultImages);
         res.status(201).json({
             data: result
         });
@@ -38,9 +50,10 @@ const createProductCms = async (req, res, next) => {
 };
 
 const getAllProductsCms = async (req, res, next) => {
-    const { name, price, category, sortOrder } = req.params;
+    const { name, price, category, limit, offset } = req.query;
+    console.log(price);
     try {
-        const result = await productService.GetAllProducts(name, price, category, sortOrder);
+        const result = await productService.GetAllProducts(name, price, category, limit, offset);
         res.status(200).json({
             data: result
         });
