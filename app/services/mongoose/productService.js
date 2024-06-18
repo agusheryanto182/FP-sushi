@@ -1,5 +1,6 @@
 const customError = require('../../errors');
 const productRepo = require('../../repositories/productRepo');
+const imageService = require('../mongoose/imagesService');
 
 const CreateProduct = async (name, price, category, imageUrl) => {
     const isNameExists = await productRepo.GetProductByName(name);
@@ -30,6 +31,8 @@ const GetAllProducts = async (name, price, category, limit, offset) => {
 
 const DeleteProduct = async (id) => {
     const result = await productRepo.DeleteProduct(id);
+    imageService.deleteImage(result.imageUrl);
+
     return result;
 };
 
