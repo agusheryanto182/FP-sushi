@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+const productDetailSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
+});
+
 const orderSchema = new mongoose.Schema(
     {
         name: {
@@ -10,7 +22,7 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        phone: {
+        phoneNumber: {
             type: String,
             required: true
         },
@@ -18,13 +30,22 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        products: {
-            type: [mongoose.Types.ObjectId],
-            ref: 'Product',
+        productDetails: [productDetailSchema],
+        totalPrice: {
+            type: Number,
             required: true
         },
+        statusPayment: {
+            type: Boolean,
+            default: false
+        },
+        statusDelivery: {
+            type: Boolean,
+            default: false
+        }
     },
     { timestamps: true }
 );
+
 
 module.exports = mongoose.model('Order', orderSchema);
