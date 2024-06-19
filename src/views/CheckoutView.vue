@@ -1,6 +1,57 @@
 <script setup>
-import TheNavbar from '../components/TheNavbar.vue'
-import TheFooter from '../components/TheFooter.vue'
+import { ref, onMounted, reactive } from 'vue'
+import { getMenuItems } from '../services/menuService'
+
+const menuItems = ref([])
+const customer = reactive({
+  name: '',
+  address: '',
+  phone: '',
+  email: ''
+})
+const products = reactive([{ name: '', quantity: 1 }])
+let productOptions = []
+
+const totalPrice = ref(0)
+
+onMounted(async () => {
+  try {
+    menuItems.value = await getMenuItems()
+    // Set productOptions after menuItems are fetched
+    productOptions = menuItems.value.map((item) => ({
+      name: item.name,
+      price: item.price
+    }))
+  } catch (error) {
+    console.error('Error fetching menu items:', error)
+  }
+})
+
+const addProduct = () => {
+  products.push({ name: '', quantity: 1 })
+}
+
+const removeProduct = (index) => {
+  products.splice(index, 1)
+  calculateTotalPrice()
+}
+
+const calculateTotalPrice = () => {
+  totalPrice.value = products.reduce((total, product) => {
+    const selectedProduct = productOptions.find((option) => option.name === product.name)
+    if (selectedProduct) {
+      const productPrice = selectedProduct.price
+      const productQuantity = parseInt(product.quantity)
+      return total + productPrice * productQuantity
+    }
+    return total
+  }, 0)
+}
+
+const submitForm = () => {
+  // Handle form submission
+  console.log('Form submitted:', customer, products)
+}
 </script>
 
 <template>
@@ -56,7 +107,7 @@ import TheFooter from '../components/TheFooter.vue'
                 required
               >
                 <option value="">Choose...</option>
-                <option v-for="option in productOptions" :value="option.price" :key="option.name">
+                <option v-for="option in productOptions" :value="option.name" :key="option.name">
                   {{ option.name }}
                 </option>
               </select>
@@ -102,48 +153,3 @@ import TheFooter from '../components/TheFooter.vue'
 
   <TheFooter />
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      customer: {
-        name: '',
-        address: '',
-        phone: '',
-        email: ''
-      },
-      products: [{ name: '', quantity: 1 }],
-      productOptions: [
-        { name: 'Sushi', price: 49000 },
-        { name: 'Strawberry', price: 29000 },
-        { name: 'Fruit Mix', price: 29000 },
-        { name: 'Sushi Rolls', price: 49000 },
-        { name: 'Sushi with Karaage', price: 49000 },
-        { name: 'Salmon V5', price: 49000 }
-      ],
-      totalPrice: 0
-    }
-  },
-  methods: {
-    addProduct() {
-      this.products.push({ name: '', quantity: 1 })
-    },
-    removeProduct(index) {
-      this.products.splice(index, 1)
-      this.calculateTotalPrice()
-    },
-    calculateTotalPrice() {
-      this.totalPrice = this.products.reduce((total, product) => {
-        const productPrice = parseInt(product.name)
-        const productQuantity = parseInt(product.quantity)
-        return total + productPrice * productQuantity
-      }, 0)
-    },
-    submitForm() {
-      // Handle form submission
-      console.log('Form submitted:', this.customer, this.products)
-    }
-  }
-}
-</script>
