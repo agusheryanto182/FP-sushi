@@ -28,4 +28,18 @@ const CreateOrder = async (req, res, next) => {
     }
 }
 
-module.exports = { CreateOrder }
+const MidtransWebHook = async (req, res, next) => {
+    const { transaction_status, order_id } = req.body;
+
+    try {
+        if (!transaction_status || !order_id) {
+            throw new customError.BadRequestError('all fields are required');
+        }
+        const result = await orderService.midtransWebHook(transaction_status, order_id);
+        res.status(201).json({ token: result });
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = { CreateOrder, MidtransWebHook }

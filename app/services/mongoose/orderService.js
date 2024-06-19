@@ -15,6 +15,9 @@ const createOrder = async (name, address, phoneNumber, email, productDetails, to
         transaction_details: {
             order_id: result._id,
             gross_amount: totalPrice
+        },
+        customer_details: {
+            email: email
         }
     };
     const token = await snap.createTransactionToken(parameter);
@@ -22,4 +25,12 @@ const createOrder = async (name, address, phoneNumber, email, productDetails, to
     return token;
 }
 
-module.exports = { createOrder }
+const midtransWebHook = async (transaction_status, order_id) => {
+    if (transaction_status === 'settlement') {
+        const statusPayment = true;
+        const result = await orderRepo.updateStatusPayment(order_id, statusPayment);
+        return result;
+    }
+}
+
+module.exports = { createOrder, midtransWebHook }

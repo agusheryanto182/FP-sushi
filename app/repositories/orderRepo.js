@@ -10,4 +10,13 @@ const CreateOrder = async (name, address, phoneNumber, email, productDetails, to
     }
 };
 
-module.exports = { CreateOrder };
+const updateStatusPayment = async (order_id, statusPayment) => {
+    try {
+        const result = await Order.updateOne({ _id: order_id }, { statusPayment });
+        return result;
+    } catch (err) {
+        throw new customError.InternalServerError(err);
+    }
+}
+
+module.exports = { CreateOrder, updateStatusPayment };
