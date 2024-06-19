@@ -102,58 +102,13 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div v-for="item in menuItems" :key="item.id" class="col-lg-4 col-md-6">
           <div class="menu-item">
             <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt1.jpg" class="img-fluid" alt="" />
+              <img :src="item.imageUrl" class="img-fluid" :alt="item.name" />
             </a>
-            <h3>Sushi</h3>
-            <h3>Rp 49.000.00</h3>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="menu-item">
-            <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt2.jpg" class="img-fluid" alt="" />
-            </a>
-            <h3>Strawberry Mix</h3>
-            <h3>Rp 29.000.00</h3>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="menu-item">
-            <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt3.jpg" class="img-fluid" alt="" />
-            </a>
-            <h3>Sushi With Kaarage</h3>
-            <h3>Rp 49.000.00</h3>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="menu-item">
-            <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt4.jpg" class="img-fluid" alt="" />
-            </a>
-            <h3>Fruit Mix</h3>
-            <h3>Rp 29.000.00</h3>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="menu-item">
-            <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt5.jpg" class="img-fluid" alt="" />
-            </a>
-            <h3>Sushi Roll</h3>
-            <h3>Rp 49.000.00</h3>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="menu-item">
-            <a @click.prevent="openNewTab" href="/checkout">
-              <img src="/src/assets/images/bt6.jpg" class="img-fluid" alt="" />
-            </a>
-            <h3>Salmon V5</h3>
-            <h3>Rp 49.000.00</h3>
+            <h3>{{ item.name }}</h3>
+            <h3>Rp {{ item.price }}</h3>
           </div>
         </div>
       </div>
@@ -162,11 +117,28 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
+import { getMenuItems } from '../services/menuService'
+
 export default {
-  methods: {
-    openNewTab() {
-      const routeData = this.$router.resolve({ path: '/checkout' })
-      window.open(routeData.href, '_blank')
+  setup() {
+    const menuItems = ref([])
+
+    onMounted(async () => {
+      try {
+        menuItems.value = await getMenuItems()
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+      }
+    })
+
+    const openNewTab = () => {
+      window.open('/checkout', '_blank')
+    }
+
+    return {
+      menuItems,
+      openNewTab
     }
   }
 }
