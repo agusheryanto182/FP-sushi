@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="book-table-now">
-              <router-link to="/checkout" class="book-table-link">Buy Now</router-link>
+              <a @click.prevent="openNewTab" class="book-table-link">Buy Now</a>
             </div>
           </div>
         </div>
@@ -104,54 +104,54 @@
       <div class="row">
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt1.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Sushi</h3>
             <h3>Rp 49.000.00</h3>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt2.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Strawberry Mix</h3>
             <h3>Rp 29.000.00</h3>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt3.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Sushi With Kaarage</h3>
             <h3>Rp 49.000.00</h3>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt4.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Fruit Mix</h3>
             <h3>Rp 29.000.00</h3>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt5.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Sushi Roll</h3>
             <h3>Rp 49.000.00</h3>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="menu-item">
-            <router-link to="/checkout">
+            <a @click.prevent="openNewTab" href="/checkout">
               <img src="/src/assets/images/bt6.jpg" class="img-fluid" alt="" />
-            </router-link>
+            </a>
             <h3>Salmon V5</h3>
             <h3>Rp 49.000.00</h3>
           </div>
@@ -160,3 +160,14 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  methods: {
+    openNewTab() {
+      const routeData = this.$router.resolve({ path: '/checkout' })
+      window.open(routeData.href, '_blank')
+    }
+  }
+}
+</script>

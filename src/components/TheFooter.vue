@@ -14,11 +14,11 @@
         <div class="col-lg-3 col-md-6">
           <h3>Best Seller</h3>
           <ul>
-            <li><router-link to="/checkout">Sushi</router-link></li>
-            <li><router-link to="/checkout">Sushi Rolls</router-link></li>
-            <li><router-link to="/checkout">Sushi With Karaage</router-link></li>
-            <li><router-link to="/checkout">Strawberry Mix</router-link></li>
-            <li><router-link to="/checkout">Salmon V5</router-link></li>
+            <li><a @click.prevent="openNewTab" href="/checkout">Sushi</a></li>
+            <li><a @click.prevent="openNewTab" href="/checkout">Sushi Rolls</a></li>
+            <li><a @click.prevent="openNewTab" href="/checkout">Sushi With Karaage</a></li>
+            <li><a @click.prevent="openNewTab" href="/checkout">Strawberry Mix</a></li>
+            <li><a @click.prevent="openNewTab" href="/checkout">Salmon V5</a></li>
           </ul>
         </div>
 
@@ -45,3 +45,14 @@
     </div>
   </footer>
 </template>
+
+<script>
+export default {
+  methods: {
+    openNewTab() {
+      const routeData = this.$router.resolve({ path: '/checkout' })
+      window.open(routeData.href, '_blank')
+    }
+  }
+}
+</script>

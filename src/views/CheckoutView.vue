@@ -39,8 +39,8 @@ import TheFooter from '../components/TheFooter.vue'
           </div>
 
           <div class="mb-3">
-            <label for="email">Email <span class="text-muted">(Optional)</span></label>
-            <input type="email" class="form-control" id="email" v-model="customer.email" />
+            <label for="email">Email <span class="text-muted"></span></label>
+            <input type="email" class="form-control" id="email" v-model="customer.email" required />
             <div class="invalid-feedback">
               Please enter a valid email address for shipping updates.
             </div>
