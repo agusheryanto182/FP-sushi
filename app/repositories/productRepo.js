@@ -13,6 +13,9 @@ const CreateProduct = async ({ name, price, category, imageUrl }) => {
 const GetProductByName = async (name) => {
     try {
         const product = await Product.findOne({ name });
+        if (!product) {
+            return false;
+        }
         return product;
     } catch (err) {
         throw new customError.InternalServerError(err);

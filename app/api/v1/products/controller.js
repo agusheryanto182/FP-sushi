@@ -51,7 +51,6 @@ const createProductCms = async (req, res, next) => {
 
 const getAllProductsCms = async (req, res, next) => {
     const { name, price, category, limit, offset } = req.query;
-    console.log(price);
     try {
         const result = await productService.GetAllProducts(name, price, category, limit, offset);
         res.status(200).json({
@@ -77,13 +76,20 @@ const deleteProductCms = async (req, res, next) => {
 const updateProductCms = async (req, res, next) => {
     const { id } = req.params;
     const { name, price, category } = req.body;
+    const imageFile = req.file;
+
     // validation
     await body('name').isString().withMessage('name must be a string').run(req);
     await body('price').isNumeric().withMessage('price must be a number').run(req);
     await body('category').isString().withMessage('category must be a string').run(req);
     const errors = validationResult(req);
 
+
     try {
+
+        if (!name || !price || !category) {
+            throw new customError.BadRequestError('all fields are required');
+        }
 
         if (price <= 0) {
             throw new customError.BadRequestError('price must be greater than 0');
@@ -93,24 +99,27 @@ const updateProductCms = async (req, res, next) => {
             throw new customError.BadRequestError('category must be food or drink');
         }
 
-        if (!name || !price || !category) {
-            throw new customError.BadRequestError('all fields are required');
-        }
-
         if (!errors.isEmpty()) {
             throw new customError.BadRequestError(errors.array()[0].msg);
         }
 
-        const resultImages = await imageService.generateUrlImage({ file: req.file });
+        if (imageFile) {
+            const resultImages = await imageService.generateUrlImage({ file: imageFile });
 
-        if (!resultImages) {
-            throw new customError.InternalServerError('failed to upload image');
+            if (!resultImages) {
+                throw new customError.InternalServerError('failed to upload image');
+            }
+
+            const result = await productService.UpdateProduct(id, name, price, category, resultImages);
+            res.status(200).json({
+                data: result
+            });
+        } else {
+            const result = await productService.UpdateProduct(id, name, price, category);
+            res.status(200).json({
+                data: result
+            });
         }
-
-        const result = await productService.UpdateProduct(id, name, price, category, resultImages);
-        res.status(200).json({
-            data: result
-        });
     } catch (err) {
         next(err);
     }
