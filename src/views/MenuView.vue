@@ -21,6 +21,10 @@
             class="border p-2 mr-2"
             required
           />
+          <select v-model="newSushi.category" class="border p-2 mr-2" required>
+            <option value="food">Food</option>
+            <option value="drink">Drink</option>
+          </select>
           <input
             v-model="newSushi.price"
             type="number"
@@ -43,6 +47,7 @@
           <thead>
             <tr>
               <th class="py-2">Name</th>
+              <th class="py-2">Category</th>
               <th class="py-2">Price</th>
               <th class="py-2">Image</th>
               <th class="py-2">Actions</th>
@@ -52,6 +57,12 @@
             <tr v-for="sushi in sushiList" :key="sushi.id">
               <td class="border px-4 py-2">
                 <input v-model="sushi.name" class="border p-2" />
+              </td>
+              <td class="border px-4 py-2">
+                <select v-model="sushi.category" class="border p-2">
+                  <option value="food">Food</option>
+                  <option value="drink">Drink</option>
+                </select>
               </td>
               <td class="border px-4 py-2">
                 <input v-model="sushi.price" type="number" class="border p-2" />
@@ -106,7 +117,7 @@ const addSushi = async () => {
   const formData = new FormData()
   formData.append('name', newSushi.value.name)
   formData.append('price', newSushi.value.price)
-  formData.append('category', 'food')
+  formData.append('category', newSushi.value.category)
   formData.append('image', newSushi.value.image)
 
   try {
@@ -119,6 +130,7 @@ const addSushi = async () => {
     sushiList.value.push(response.data)
     newSushi.value.name = ''
     newSushi.value.price = 0
+    newSushi.value.category = 'food'
     newSushi.value.image = null
   } catch (error) {
     console.error('Error adding sushi:', error)
@@ -129,12 +141,13 @@ const updateSushi = async (sushi) => {
   const formData = new FormData()
   formData.append('name', sushi.name)
   formData.append('price', sushi.price)
+  formData.append('category', sushi.category)
   if (sushi.image) {
     formData.append('image', sushi.image)
   }
 
   try {
-    await axios.put(`${apiEndpoint}/product/${sushi.id}`, formData, {
+    await axios.put(`${apiEndpoint}/admin/product/${sushi.id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -154,8 +167,6 @@ const deleteSushi = async (id) => {
     })
     sushiList.value = sushiList.value.filter((sushi) => sushi.id !== id)
   } catch (error) {
-    console.log('token')
-    console.log(token)
     console.error('Error deleting sushi:', error)
   }
 }

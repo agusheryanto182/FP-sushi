@@ -7,6 +7,7 @@ export const getMenuItems = async () => {
         return response.data.data.map(item => ({
             id: item._id,
             name: item.name,
+            category: item.category,
             price: item.price,
             imageUrl: `${baseURL}/${item.imageUrl}`,
             checkoutUrl: '/checkout'
