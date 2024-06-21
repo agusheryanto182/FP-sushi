@@ -4,12 +4,14 @@ import Login from '../views/LoginView.vue'
 import Menu from '../views/MenuView.vue'
 import Home from '../views/HomeView.vue'
 import Order from '../views/OrderView.vue'
+import Offer from '../views/OfferView.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/menu', component: Menu, meta: { requiresAuth: true } },
   { path: '/order', component: Order, meta: { requiresAuth: true } },
+  { path: '/offer', component: Offer, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

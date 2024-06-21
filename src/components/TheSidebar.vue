@@ -10,7 +10,7 @@
         </button>
         <ul v-if="isHomeSubmenuOpen" class="ml-4 space-y-2">
           <li><a class="text-gray-700 hover:text-gray-900" href="/menu">Menu</a></li>
-          <li><a class="text-gray-700 hover:text-gray-900" href="/offers">Offers</a></li>
+          <li><a class="text-gray-700 hover:text-gray-900" href="/offer">Offer</a></li>
         </ul>
       </li>
       <li><a class="text-gray-700 hover:text-gray-900" href="/order">Order Management</a></li>
