@@ -11,9 +11,9 @@ const multerHandler = (req, res, next) => {
     return upload.none()(req, res, next);
 };
 
-router.post('/admin/product/create', auth.authenticateUser, auth.authorizeRoles('admin'), upload.single('image'), productCtrl.createProductCms);
-router.get('/product', productCtrl.getAllProductsCms);
-router.delete('/admin/product/:id', auth.authenticateUser, auth.authorizeRoles('admin'), productCtrl.deleteProductCms);
-router.put('/admin/product/:id', auth.authenticateUser, auth.authorizeRoles('admin'), multerHandler, productCtrl.updateProductCms);
+router.post('/admin/offer', auth.authenticateUser, auth.authorizeRoles('admin'), upload.single('image'), productCtrl.createOfferCMS);
+router.get('/offer', productCtrl.getAllOffers);
+router.delete('/admin/offer/:id', auth.authenticateUser, auth.authorizeRoles('admin'), productCtrl.deleteOfferCMS);
+router.put('/admin/offer/:id', auth.authenticateUser, auth.authorizeRoles('admin'), multerHandler, productCtrl.updateOfferCMS);
 
 module.exports = router

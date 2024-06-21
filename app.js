@@ -7,10 +7,11 @@ const cors = require('cors');
 const app = express();
 
 // router
-const authCMSRouter = require('./app/api/v1/auth/router');
-const usersCMSRouter = require('./app/api/v1/users/router');
-const productsCMSRouter = require('./app/api/v1/products/router');
+const authRouter = require('./app/api/v1/auth/router');
+const usersRouter = require('./app/api/v1/users/router');
+const productsRouter = require('./app/api/v1/products/router');
 const orderRouter = require('./app/api/v1/orders/router');
+const offerRouter = require('./app/api/v1/offers/router');
 
 const v1 = '/api/v1';
 
@@ -29,10 +30,11 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use(`${v1}`, authCMSRouter);
-app.use(`${v1}`, usersCMSRouter);
-app.use(`${v1}`, productsCMSRouter);
+app.use(`${v1}`, authRouter);
+app.use(`${v1}`, usersRouter);
+app.use(`${v1}`, productsRouter);
 app.use(`${v1}`, orderRouter);
+app.use(`${v1}`, offerRouter);
 
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);
