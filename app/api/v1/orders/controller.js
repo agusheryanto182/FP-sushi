@@ -42,4 +42,42 @@ const MidtransWebHook = async (req, res, next) => {
     }
 }
 
-module.exports = { CreateOrder, MidtransWebHook }
+const getAllOrders = async (req, res, next) => {
+    const { name, statusPayment, statusDelivery } = req.query;
+    try {
+        const result = await orderService.getAllOrders(name, statusPayment, statusDelivery);
+        res.status(200).json({ data: result });
+    } catch (err) {
+        next(err);
+    }
+}
+
+const updateOrderCMS = async (req, res, next) => {
+    const { name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery } = req.body;
+    const { id } = req.params;
+    try {
+        const result = await orderService.updateOrderCMS(id, name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery);
+        res.status(200).json({ data: result });
+    } catch (err) {
+        next(err);
+    }
+}
+
+const deleteOrderCMS = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const result = await orderService.deleteOrderCMS(id);
+        res.status(200).json({ data: result });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+module.exports = {
+    CreateOrder,
+    MidtransWebHook,
+    getAllOrders,
+    updateOrderCMS,
+    deleteOrderCMS
+}

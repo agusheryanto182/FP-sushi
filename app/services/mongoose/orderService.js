@@ -33,4 +33,37 @@ const midtransWebHook = async (transaction_status, order_id) => {
     }
 }
 
-module.exports = { createOrder, midtransWebHook }
+const getAllOrders = async (name, statusPayment, statusDelivery) => {
+    const query = {};
+    if (name) {
+        query.name = { $regex: new RegExp('^' + name, 'i') };
+    }
+    if (statusPayment) {
+        query.statusPayment = { $gte: statusPayment };
+    }
+    if (statusDelivery) {
+        query.statusDelivery = { $gte: statusDelivery };
+    }
+
+
+    const result = await orderRepo.GetAllOrders(query);
+    return result.sort((a, b) => b.createdAt - a.createdAt);
+}
+
+const updateOrderCMS = async (id, name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery) => {
+    const result = await orderRepo.updateOrderCMS(id, name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery);
+    return result;
+}
+
+const deleteOrderCMS = async (id) => {
+    const result = await orderRepo.deleteOrderCMS(id);
+    return result;
+}
+
+module.exports = {
+    createOrder,
+    midtransWebHook,
+    getAllOrders,
+    updateOrderCMS,
+    deleteOrderCMS
+}

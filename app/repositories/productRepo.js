@@ -61,10 +61,26 @@ const UpdateProduct = async (id, name, price, category, imageUrl) => {
     }
 };
 
+const GetProductById = async (id) => {
+    try {
+        const product = await Product.findById(id);
+        if (!product) {
+            throw new customError.NotFoundError('product not found');
+        }
+        return product;
+    } catch (err) {
+        if (err instanceof customError.NotFoundError) {
+            throw err;
+        }
+        throw new customError.InternalServerError(err);
+    }
+};
+
 module.exports = {
     CreateProduct,
     GetProductByName,
     GetAllProducts,
     DeleteProduct,
-    UpdateProduct
+    UpdateProduct,
+    GetProductById
 };

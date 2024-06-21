@@ -12,7 +12,11 @@ const CreateProduct = async (name, price, category, imageUrl) => {
     return product;
 };
 
-const GetAllProducts = async (name, price, category, limit, offset) => {
+const GetAllProducts = async (id, name, price, category) => {
+    if (id) {
+        return await productRepo.GetProductById(id);
+    }
+
     const query = {};
     if (name) {
         query.name = { $regex: new RegExp('^' + name, 'i') };
@@ -25,7 +29,7 @@ const GetAllProducts = async (name, price, category, limit, offset) => {
     }
 
 
-    const result = await productRepo.GetAllProducts(query, limit, offset);
+    const result = await productRepo.GetAllProducts(query);
     return result.sort((a, b) => b.createdAt - a.createdAt);
 };
 

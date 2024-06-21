@@ -1,3 +1,4 @@
+const { query } = require('express');
 const Order = require('../api/v1/orders/model');
 const customError = require('../errors');
 
@@ -19,4 +20,49 @@ const updateStatusPayment = async (order_id, statusPayment) => {
     }
 }
 
-module.exports = { CreateOrder, updateStatusPayment };
+const GetAllOrders = async (query) => {
+    try {
+        const result = await Order.find(query);
+        return result;
+    } catch (err) {
+        throw new customError.InternalServerError(err);
+    }
+}
+
+const updateOrderCMS = async (id, name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery) => {
+    try {
+        const result = await Order.findByIdAndUpdate(id, { name, address, phoneNumber, email, totalPrice, statusPayment, statusDelivery }, { new: true });
+        if (!result) {
+            throw new customError.NotFoundError('order not found');
+        }
+        return result;
+    } catch (err) {
+        if (err instanceof customError.NotFoundError) {
+            throw err;
+        }
+        throw new customError.InternalServerError(err);
+    }
+}
+
+const deleteOrderCMS = async (id) => {
+    try {
+        const result = await Order.findByIdAndDelete(id);
+        if (!result) {
+            throw new customError.NotFoundError('order not found');
+        }
+        return result;
+    } catch (err) {
+        if (err instanceof customError.NotFoundError) {
+            throw err;
+        }
+        throw new customError.InternalServerError(err);
+    }
+}
+
+module.exports = {
+    CreateOrder,
+    updateStatusPayment,
+    GetAllOrders,
+    updateOrderCMS,
+    deleteOrderCMS
+};

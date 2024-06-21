@@ -50,9 +50,9 @@ const createProductCms = async (req, res, next) => {
 };
 
 const getAllProductsCms = async (req, res, next) => {
-    const { name, price, category, limit, offset } = req.query;
+    const { id, name, price, category } = req.query;
     try {
-        const result = await productService.GetAllProducts(name, price, category, limit, offset);
+        const result = await productService.GetAllProducts(id, name, price, category);
         res.status(200).json({
             data: result
         });
