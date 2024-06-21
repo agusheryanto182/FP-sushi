@@ -13,6 +13,7 @@
           <li><a class="text-gray-700 hover:text-gray-900" href="/offers">Offers</a></li>
         </ul>
       </li>
+      <li><a class="text-gray-700 hover:text-gray-900" href="/order">Order Management</a></li>
       <li><a class="text-gray-700 hover:text-gray-900" href="/our-service">Our Service</a></li>
       <li><a class="text-gray-700 hover:text-gray-900" href="/our-team">Our Team</a></li>
     </ul>

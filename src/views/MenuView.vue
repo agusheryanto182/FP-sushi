@@ -39,7 +39,7 @@
             class="border p-2 mr-2"
             required
           />
-          <button type="submit" class="bg-blue-500 text-white p-2">Add Sushi</button>
+          <button type="submit" class="bg-blue-500 text-white p-2">Add Menu</button>
         </form>
 
         <!-- Sushi List -->
