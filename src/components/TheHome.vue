@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="book-table-now">
-            <a @click.prevent="openNewTab" class="book-table-link">Buy Now</a>
+            <a href="/checkout" @click.prevent="openNewTab" class="book-table-link">Buy Now</a>
           </div>
         </div>
       </div>

@@ -228,18 +228,16 @@ ul {
 #our-offers .offer-item {
   text-align: center;
   padding: 40px;
-  border-radius: 15px;
-  /* background: #f3f3f5; */
   margin-bottom: 40px;
   transition: 0.3s;
 }
 
 #our-offers .offer-item:hover {
-  background: #ff8243;
-  color: white;
+  background: #fbfbfd;
   box-shadow:
     0 20px 20px rgba(0, 0, 0, 0.2),
     0 -20px 20px #ffffff;
+  transform: scale(1.05);
 }
 
 #our-offers .offer-item img {
@@ -256,13 +254,13 @@ ul {
 }
 
 #our-offers .offer-item h3 {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
 #our-offers .offer-item p {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
