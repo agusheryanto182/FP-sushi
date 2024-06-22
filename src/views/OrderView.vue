@@ -9,77 +9,141 @@
       </div>
 
       <!-- Main Content -->
-      <div class="w-3/4 p-4">
+      <div class="w-full p-4">
         <h1 class="text-2xl font-bold mb-4">Order List</h1>
 
         <!-- Order List -->
-        <table class="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th class="py-2">Name</th>
-              <th class="py-2">Address</th>
-              <th class="py-2">Phone Number</th>
-              <th class="py-2">Email</th>
-              <th class="py-2">Product Details</th>
-              <th class="py-2">Total Price</th>
-              <th class="py-2">Payment Status</th>
-              <th class="py-2">Delivery Status</th>
-              <th class="py-2">Created At</th>
-              <th class="py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="order in orderList" :key="order._id">
-              <td class="border px-4 py-2">
-                <input v-model="order.name" class="border p-2" />
-              </td>
-              <td class="border px-4 py-2">
-                <input v-model="order.address" class="border p-2" />
-              </td>
-              <td class="border px-4 py-2">
-                <input v-model="order.phoneNumber" class="border p-2" />
-              </td>
-              <td class="border px-4 py-2">
-                <input v-model="order.email" class="border p-2" />
-              </td>
-              <td class="border px-4 py-2">
-                <ul>
-                  <li v-for="product in order.productDetails" :key="product._id">
-                    {{ productNames[product._id] }} (Quantity: {{ product.quantity }})
-                  </li>
-                </ul>
-              </td>
-              <td class="border px-4 py-2">
-                <input v-model="order.totalPrice" type="number" class="border p-2" />
-              </td>
-              <td class="border px-4 py-2">
-                <input
-                  v-model="order.statusPayment"
-                  type="checkbox"
-                  :checked="order.statusPayment"
-                />
-              </td>
-              <td class="border px-4 py-2">
-                <input
-                  v-model="order.statusDelivery"
-                  type="checkbox"
-                  :checked="order.statusDelivery"
-                />
-              </td>
-              <td class="border px-4 py-2">
-                {{ new Date(order.createdAt).toLocaleString() }}
-              </td>
-              <td class="border px-4 py-2">
-                <button @click="updateOrder(order)" class="bg-green-500 text-white p-2 mr-2">
-                  Update
-                </button>
-                <button @click="deleteOrder(order._id)" class="bg-red-500 text-white p-2">
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Name
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Address
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Phone Number
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Email
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Product Details
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Total Price
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Payment Status
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Delivery Status
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Created At
+                </th>
+                <th
+                  class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="order in orderList" :key="order._id">
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.name"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.address"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.phoneNumber"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.email"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <ul>
+                    <li v-for="product in order.productDetails" :key="product._id">
+                      {{ productNames[product._id] }} (Quantity: {{ product.quantity }})
+                    </li>
+                  </ul>
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.totalPrice"
+                    type="number"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.statusPayment"
+                    type="checkbox"
+                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  <input
+                    v-model="order.statusDelivery"
+                    type="checkbox"
+                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  />
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap">
+                  {{ new Date(order.createdAt).toLocaleString() }}
+                </td>
+                <td class="px-2 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button
+                    @click="updateOrder(order)"
+                    class="bg-green-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
+                  >
+                    Update
+                  </button>
+                  <button
+                    @click="deleteOrder(order._id)"
+                    class="bg-red-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

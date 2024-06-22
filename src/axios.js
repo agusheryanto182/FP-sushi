@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/router';
 
 const Api = axios.create({
     baseURL: 'http://localhost:9000',
@@ -14,6 +15,21 @@ Api.interceptors.request.use(
         return config;
     },
     error => {
+        return Promise.reject(error);
+    }
+);
+
+// Add a response interceptor to handle token expiration
+Api.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        const { status } = error.response;
+        if (status === 401) { // Unauthorized
+            localStorage.removeItem('token'); // Remove the expired token
+            router.push('/login'); // Redirect to login page
+        }
         return Promise.reject(error);
     }
 );

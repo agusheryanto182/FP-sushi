@@ -10,46 +10,36 @@
 
       <!-- Main Content -->
       <div class="w-full p-4">
-        <h1 class="text-2xl font-bold mb-4">Menu Management</h1>
+        <h1 class="text-2xl font-bold mb-4">Service Management</h1>
 
-        <!-- Add Sushi Form -->
-        <form @submit.prevent="addSushi" class="mb-4 p-4 bg-white shadow rounded-lg">
+        <!-- Add Service Form -->
+        <form @submit.prevent="addService" class="mb-4 p-4 bg-white shadow rounded-lg">
           <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Sushi Name</label>
+            <label for="title" class="block text-sm font-medium text-gray-700">Service Title</label>
             <input
-              v-model="newSushi.name"
+              v-model="newService.title"
               type="text"
-              id="name"
-              placeholder="Sushi Name"
+              id="title"
+              placeholder="Service Title"
               class="mt-1 block w-full border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
           <div class="mb-4">
-            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-            <select
-              v-model="newSushi.category"
-              id="category"
-              class="mt-1 block w-full border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
+            <label for="description" class="block text-sm font-medium text-gray-700"
+              >Description</label
             >
-              <option value="food">Food</option>
-              <option value="drink">Drink</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
             <input
-              v-model="newSushi.price"
-              type="number"
-              id="price"
-              placeholder="Price"
+              v-model="newService.description"
+              type="text"
+              id="description"
+              placeholder="Description"
               class="mt-1 block w-full border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
           <div class="mb-4">
-            <label for="image" class="block text-sm font-medium text-gray-700">Sushi Image</label>
+            <label for="image" class="block text-sm font-medium text-gray-700">Service Image</label>
             <input
               @change="onFileChange"
               type="file"
@@ -63,11 +53,11 @@
             type="submit"
             class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Add Menu
+            Add Service
           </button>
         </form>
 
-        <!-- Sushi List -->
+        <!-- Service List -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -75,17 +65,12 @@
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Name
+                  Title
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Category
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Price
+                  Description
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -100,37 +85,27 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="sushi in sushiList" :key="sushi.id">
+              <tr v-for="service in serviceList" :key="service.id">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <input
-                    v-model="sushi.name"
+                    v-model="service.title"
                     class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <select
-                    v-model="sushi.category"
-                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
-                    <option value="food">Food</option>
-                    <option value="drink">Drink</option>
-                  </select>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
                   <input
-                    v-model="sushi.price"
-                    type="number"
+                    v-model="service.description"
                     class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <img
-                    :src="sushi.imageUrl"
-                    alt="Sushi Image"
+                    :src="service.imageUrl"
+                    alt="Service Image"
                     class="h-16 w-16 object-cover rounded-md"
                   />
                   <input
-                    @change="onFileChangeUpdate($event, sushi)"
+                    @change="onFileChangeUpdate($event, service)"
                     type="file"
                     accept="image/*"
                     class="mt-2 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
@@ -138,13 +113,13 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
-                    @click="updateSushi(sushi)"
+                    @click="updateService(service)"
                     class="bg-green-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
                   >
                     Update
                   </button>
                   <button
-                    @click="deleteSushi(sushi.id)"
+                    @click="deleteService(service._id)"
                     class="bg-red-500 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   >
                     Delete
@@ -162,100 +137,108 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from '../axios.js'
-import { getMenuItems } from '../services/menuService.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
+import Api from '../axios.js'
+
+const baseURL = Api.defaults.baseURL
 
 const apiEndpoint = '/api/v1'
 
-const newSushi = ref({ name: '', category: 'food', price: 0, image: null })
-const sushiList = ref([])
+const newService = ref({ title: '', description: '', image: null })
+const serviceList = ref([])
 const token = localStorage.getItem('token')
 
-const fetchSushiList = async () => {
+const fetchServiceList = async () => {
   try {
-    sushiList.value = await getMenuItems()
-  } catch (error) {
-    console.error('Error fetching sushi list:', error)
-  }
-}
-
-const addSushi = async () => {
-  const formData = new FormData()
-  formData.append('name', newSushi.value.name)
-  formData.append('category', newSushi.value.category)
-  formData.append('price', newSushi.value.price)
-  formData.append('image', newSushi.value.image)
-
-  try {
-    const response = await axios.post(`${apiEndpoint}/admin/product/create`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    sushiList.value.push(response.data)
-    newSushi.value.name = ''
-    newSushi.value.category = 'food'
-    newSushi.value.price = 0
-    newSushi.value.image = null
-    window.location.reload()
-  } catch (error) {
-    console.error('Error adding sushi:', error)
-  }
-}
-
-const updateSushi = async (sushi) => {
-  const formData = new FormData()
-  formData.append('name', sushi.name)
-  formData.append('category', sushi.category)
-  formData.append('price', sushi.price)
-  if (sushi.image) {
-    formData.append('image', sushi.image)
-  }
-
-  try {
-    await axios.put(`${apiEndpoint}/admin/product/${sushi.id}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    window.location.reload()
-  } catch (error) {
-    console.error('Error updating sushi:', error)
-  }
-}
-
-const deleteSushi = async (id) => {
-  try {
-    await axios.delete(`${apiEndpoint}/admin/product/${id}`, {
+    const response = await axios.get(`${apiEndpoint}/our-services`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    sushiList.value = sushiList.value.filter((sushi) => sushi.id !== id)
+
+    serviceList.value = response.data.data.map((service) => {
+      service.imageUrl = `${baseURL}/${service.imageUrl}`
+      return service
+    })
+  } catch (error) {
+    console.error('Error fetching service list:', error)
+  }
+}
+
+const addService = async () => {
+  const formData = new FormData()
+  formData.append('title', newService.value.title)
+  formData.append('description', newService.value.description)
+  formData.append('image', newService.value.image)
+
+  try {
+    const response = await axios.post(`${apiEndpoint}/admin/our-services`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    serviceList.value.push(response.data)
+    newService.value.title = ''
+    newService.value.description = ''
+    newService.value.image = null
     window.location.reload()
   } catch (error) {
-    console.error('Error deleting sushi:', error)
+    console.error('Error adding service:', error)
+  }
+}
+
+const updateService = async (service) => {
+  const formData = new FormData()
+  formData.append('title', service.title)
+  formData.append('description', service.description)
+  if (service.image) {
+    formData.append('image', service.image)
+  }
+
+  try {
+    await axios.put(`${apiEndpoint}/admin/our-services/${service._id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    window.location.reload()
+  } catch (error) {
+    console.error('Error updating service:', error)
+  }
+}
+
+const deleteService = async (id) => {
+  try {
+    await axios.delete(`${apiEndpoint}/admin/our-services/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    serviceList.value = serviceList.value.filter((service) => service.id !== id)
+    window.location.reload()
+  } catch (error) {
+    console.error('Error deleting service:', error)
   }
 }
 
 const onFileChange = (event) => {
   const file = event.target.files[0]
   if (file) {
-    newSushi.value.image = file
+    newService.value.image = file
   }
 }
 
-const onFileChangeUpdate = (event, sushi) => {
+const onFileChangeUpdate = (event, service) => {
   const file = event.target.files[0]
   if (file) {
-    sushi.image = file
+    service.image = file
   }
 }
 
-onMounted(fetchSushiList)
+onMounted(fetchServiceList)
 </script>
 
 <style scoped>
