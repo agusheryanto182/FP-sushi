@@ -129,6 +129,7 @@ const addOffer = async () => {
     newOffer.value.title = ''
     newOffer.value.description = ''
     newOffer.value.image = null
+    window.location.reload()
   } catch (error) {
     console.error('Error adding offer:', error)
   }
@@ -149,6 +150,7 @@ const updateOffer = async (offer) => {
         'Content-Type': 'multipart/form-data'
       }
     })
+    window.location.reload()
   } catch (error) {
     console.error('Error updating offer:', error)
   }
@@ -162,6 +164,7 @@ const deleteOffer = async (id) => {
       }
     })
     offerList.value = offerList.value.filter((offer) => offer.id !== id)
+    window.location.reload()
   } catch (error) {
     console.error('Error deleting offer:', error)
   }

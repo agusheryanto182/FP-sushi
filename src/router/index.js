@@ -5,6 +5,7 @@ import Menu from '../views/MenuView.vue'
 import Home from '../views/HomeView.vue'
 import Order from '../views/OrderView.vue'
 import Offer from '../views/OfferView.vue'
+import Hero from '../views/HeroView.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -12,6 +13,7 @@ const routes = [
   { path: '/menu', component: Menu, meta: { requiresAuth: true } },
   { path: '/order', component: Order, meta: { requiresAuth: true } },
   { path: '/offer', component: Offer, meta: { requiresAuth: true } },
+  { path: '/hero', component: Hero, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

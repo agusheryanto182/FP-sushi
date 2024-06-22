@@ -155,6 +155,7 @@ const updateOrder = async (order) => {
         'Content-Type': 'application/json'
       }
     })
+    window.location.reload()
   } catch (error) {
     console.error('Error updating order:', error)
   }
@@ -168,6 +169,7 @@ const deleteOrder = async (id) => {
       }
     })
     orderList.value = orderList.value.filter((order) => order._id !== id)
+    window.location.reload()
   } catch (error) {
     console.error('Error deleting order:', error)
   }

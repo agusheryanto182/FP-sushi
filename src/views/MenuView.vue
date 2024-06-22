@@ -132,6 +132,7 @@ const addSushi = async () => {
     newSushi.value.price = 0
     newSushi.value.category = 'food'
     newSushi.value.image = null
+    window.location.reload()
   } catch (error) {
     console.error('Error adding sushi:', error)
   }
@@ -153,6 +154,7 @@ const updateSushi = async (sushi) => {
         'Content-Type': 'multipart/form-data'
       }
     })
+    window.location.reload()
   } catch (error) {
     console.error('Error updating sushi:', error)
   }
@@ -166,6 +168,7 @@ const deleteSushi = async (id) => {
       }
     })
     sushiList.value = sushiList.value.filter((sushi) => sushi.id !== id)
+    window.location.reload()
   } catch (error) {
     console.error('Error deleting sushi:', error)
   }
