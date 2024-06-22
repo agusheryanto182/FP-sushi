@@ -122,6 +122,13 @@ ul {
 
 #gallery {
   padding-top: 120px;
+  padding-bottom: 120px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .book-table-img {
@@ -222,16 +229,14 @@ ul {
   text-align: center;
   padding: 40px;
   border-radius: 15px;
-  background: #f3f3f5;
-  box-shadow:
-    0 20px 20px rgba(0, 0, 0, 0.2),
-    0 -20px 20px #ffffff;
+  /* background: #f3f3f5; */
   margin-bottom: 40px;
   transition: 0.3s;
 }
 
 #our-offers .offer-item:hover {
-  background: #fbfbfd;
+  background: #ff8243;
+  color: white;
   box-shadow:
     0 20px 20px rgba(0, 0, 0, 0.2),
     0 -20px 20px #ffffff;
@@ -274,20 +279,22 @@ ul {
   text-align: center;
   padding: 30px;
   border-radius: 15px;
-  background: #f3f3f5;
-  box-shadow:
-    inset 6px 6px 12px #e2e2e2,
-    inset -6px -6px 12px #ffffff;
+  /* background: #f3f3f5; */
+
   margin-bottom: 30px;
-  transition: 0.3s;
+  transition:
+    transform 0.3s,
+    background-color 0.3s;
 }
 
 #our-menu .menu-item:hover {
-  background: #fbfbfd;
+  background: #ff8243; /* Warna oren saat hover */
+  color: white;
   box-shadow:
-    inset 6px 6px 12px #d4d4d4,
-    inset -6px -6px 12px #ffffff;
-  transform: translateY(-5px);
+    0 20px 20px rgba(0, 0, 0, 0.2),
+    0 -20px 20px #ffffff;
+
+  transform: scale(1.05); /* Memperbesar sedikit saat hover */
 }
 
 #our-menu .menu-item img {
