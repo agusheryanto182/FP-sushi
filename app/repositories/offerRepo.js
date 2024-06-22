@@ -13,13 +13,13 @@ const CreateOffer = async ({ title, description, imageUrl }) => {
 const GetAllOffers = async (id) => {
     try {
         if (id) {
-            const offers = await Offer.find({ userId: id });
+            const offers = await Offer.findById(id);
             if (!offers) {
                 throw new customError.NotFoundError('offers not found');
             }
             return offers;
         }
-        const offers = await Offer.find();
+        const offers = await Offer.find().sort({ createdAt: -1 });
         return offers;
     } catch (err) {
         if (err instanceof customError.NotFoundError) {

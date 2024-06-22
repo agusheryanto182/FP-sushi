@@ -12,7 +12,15 @@ const GetAllOffers = async (id) => {
 };
 
 const UpdateOffers = async (id, title, description, imageUrl) => {
+    console.log(id, title, description, imageUrl);
+    const oldOffer = await offerRepo.GetAllOffers(id);
+
     const offer = await offerRepo.UpdateOffers(id, title, description, imageUrl);
+
+    if (imageUrl) {
+        imageService.deleteImage(oldOffer.imageUrl);
+    }
+
     return offer;
 };
 
