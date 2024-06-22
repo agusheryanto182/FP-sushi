@@ -1,4 +1,3 @@
-const { query } = require('express');
 const heroRepo = require('../../repositories/heroRepo');
 const imageService = require('../mongoose/imagesService');
 
