@@ -7,6 +7,7 @@ import Order from '../views/OrderView.vue'
 import Offer from '../views/OfferView.vue'
 import Hero from '../views/HeroView.vue'
 import OurService from '../views/OurServiceView.vue'
+import Contact from '../views/ContactView.vue'
 
 const routes = [
   { path: '/', component: Home, meta: { requiresAuth: true } },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/offer', component: Offer, meta: { requiresAuth: true } },
   { path: '/hero', component: Hero, meta: { requiresAuth: true } },
   { path: '/our-service', component: OurService, meta: { requiresAuth: true } },
+  { path: '/contact', component: Contact, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

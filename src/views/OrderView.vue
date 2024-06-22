@@ -154,6 +154,8 @@ import { ref, onMounted } from 'vue'
 import axios from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const apiEndpoint = '/api/v1'
 
@@ -171,7 +173,11 @@ const fetchOrderList = async () => {
     orderList.value = response.data.data
     await fetchProductNames(orderList.value)
   } catch (error) {
-    console.error('Error fetching order list:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -197,7 +203,11 @@ const fetchProductNames = async (orders) => {
       productNames.value[response.data.data._id] = response.data.data.name
     })
   } catch (error) {
-    console.error('Error fetching product names:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -213,29 +223,45 @@ const updateOrder = async (order) => {
   }
 
   try {
-    await axios.put(`${apiEndpoint}/admin/order/${order._id}`, orderData, {
+    const response = await axios.put(`${apiEndpoint}/admin/order/${order._id}`, orderData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Order updated successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error updating order:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
 const deleteOrder = async (id) => {
   try {
-    await axios.delete(`${apiEndpoint}/admin/order/${id}`, {
+    const response = await axios.delete(`${apiEndpoint}/admin/order/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     orderList.value = orderList.value.filter((order) => order._id !== id)
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Order deleted successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error deleting order:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 

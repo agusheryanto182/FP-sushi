@@ -140,6 +140,8 @@ import axios from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
 import Api from '../axios.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const baseURL = Api.defaults.baseURL
 
@@ -158,11 +160,16 @@ const fetchOfferList = async () => {
     })
 
     offerList.value = response.data.data.map((offer) => {
+      offer.id = offer._id
       offer.imageUrl = `${baseURL}/${offer.imageUrl}`
       return offer
     })
   } catch (error) {
-    console.error('Error fetching offer list:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -179,13 +186,24 @@ const addOffer = async () => {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status === 201) {
+      toast.success('Offer added successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
     offerList.value.push(response.data)
     newOffer.value.title = ''
     newOffer.value.description = ''
     newOffer.value.image = null
-    window.location.reload()
   } catch (error) {
-    console.error('Error adding offer:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -198,29 +216,45 @@ const updateOffer = async (offer) => {
   }
 
   try {
-    await axios.put(`${apiEndpoint}/admin/offer/${offer._id}`, formData, {
+    const response = await axios.put(`${apiEndpoint}/admin/offer/${offer._id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
       }
     })
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Offer updated successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error updating offer:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
 const deleteOffer = async (id) => {
   try {
-    await axios.delete(`${apiEndpoint}/admin/offer/${id}`, {
+    const response = await axios.delete(`${apiEndpoint}/admin/offer/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     offerList.value = offerList.value.filter((offer) => offer.id !== id)
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Offer deleted successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error deleting offer:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 

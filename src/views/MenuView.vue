@@ -162,11 +162,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from '../axios.js'
-import { getMenuItems } from '../services/menuService.js'
+import Api from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const apiEndpoint = '/api/v1'
+const baseURL = Api.defaults.baseURL
 
 const newSushi = ref({ name: '', category: 'food', price: 0, image: null })
 const sushiList = ref([])
@@ -174,9 +177,19 @@ const token = localStorage.getItem('token')
 
 const fetchSushiList = async () => {
   try {
-    sushiList.value = await getMenuItems()
+    const response = await axios.get('/api/v1/product')
+    sushiList.value = response.data.data.map((sushi) => {
+      sushi.id = sushi._id
+      sushi.imageUrl = `${baseURL}/${sushi.imageUrl}`
+      sushi.checkoutUrl = '/checkout'
+      return sushi
+    })
   } catch (error) {
-    console.error('Error fetching sushi list:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -194,14 +207,26 @@ const addSushi = async () => {
         'Content-Type': 'multipart/form-data'
       }
     })
+
+    if (response.status === 201) {
+      toast.success('Sushi added successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
     sushiList.value.push(response.data)
     newSushi.value.name = ''
     newSushi.value.category = 'food'
     newSushi.value.price = 0
     newSushi.value.image = null
-    window.location.reload()
   } catch (error) {
-    console.error('Error adding sushi:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -215,29 +240,48 @@ const updateSushi = async (sushi) => {
   }
 
   try {
-    await axios.put(`${apiEndpoint}/admin/product/${sushi.id}`, formData, {
+    const response = await axios.put(`${apiEndpoint}/admin/product/${sushi.id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
       }
     })
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Sushi updated successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
   } catch (error) {
-    console.error('Error updating sushi:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
 const deleteSushi = async (id) => {
   try {
-    await axios.delete(`${apiEndpoint}/admin/product/${id}`, {
+    const response = await axios.delete(`${apiEndpoint}/admin/product/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     sushiList.value = sushiList.value.filter((sushi) => sushi.id !== id)
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Sushi deleted successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error deleting sushi:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 

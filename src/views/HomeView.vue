@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TheNavbar :user="user" @logout="logout" />
+    <TheNavbar />
     <div class="flex">
       <TheSidebar />
       <main class="flex-1 p-4">
@@ -29,8 +29,14 @@ import { ref, onMounted } from 'vue'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
 import axios from '../axios.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const user = ref(null)
+
+toast.success('Welcome To Suki Sushi', {
+  autoClose: 1000
+})
 
 const fetchUser = async () => {
   try {
@@ -42,20 +48,4 @@ const fetchUser = async () => {
 }
 
 onMounted(fetchUser)
-
-const logout = () => {
-  localStorage.removeItem('token')
-  delete axios.defaults.headers.common['Authorization']
-  // Redirect to login page
-  window.location.href = '/login'
-}
 </script>
-
-<style scoped>
-/* Styling for sidebar (adjust as needed) */
-.sidebar {
-  width: 240px;
-  background-color: #333;
-  color: #fff;
-}
-</style>

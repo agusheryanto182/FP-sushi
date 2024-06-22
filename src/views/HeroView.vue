@@ -116,6 +116,8 @@ import axios from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
 import Api from '../axios.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const baseURL = Api.defaults.baseURL
 
@@ -133,7 +135,11 @@ const fetchHeroList = async () => {
       return hero
     })
   } catch (error) {
-    console.error('Error fetching hero list:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -149,12 +155,26 @@ const addHero = async () => {
         'Content-Type': 'multipart/form-data'
       }
     })
+
+    if (response.status === 201) {
+      toast.success('Hero added successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      window.location.reload()
+    }
+
     heroList.value.push(response.data)
     newHero.value.title = ''
     newHero.value.image = null
-    window.location.reload()
   } catch (error) {
-    console.error('Error adding hero:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -166,29 +186,51 @@ const updateHero = async (hero) => {
   }
 
   try {
-    await axios.put(`${apiEndpoint}/admin/hero/${hero._id}`, formData, {
+    const response = await axios.put(`${apiEndpoint}/admin/hero/${hero._id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
       }
     })
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Hero updated successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
   } catch (error) {
-    console.error('Error updating hero:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
 const deleteHero = async (id) => {
   try {
-    await axios.delete(`${apiEndpoint}/admin/hero/${id}`, {
+    const response = await axios.delete(`${apiEndpoint}/admin/hero/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     heroList.value = heroList.value.filter((hero) => hero.id !== id)
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Hero deleted successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
   } catch (error) {
-    console.error('Error deleting hero:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 

@@ -140,6 +140,8 @@ import axios from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
 import Api from '../axios.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const baseURL = Api.defaults.baseURL
 
@@ -158,11 +160,16 @@ const fetchServiceList = async () => {
     })
 
     serviceList.value = response.data.data.map((service) => {
+      service.id = service._id
       service.imageUrl = `${baseURL}/${service.imageUrl}`
       return service
     })
   } catch (error) {
-    console.error('Error fetching service list:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -179,13 +186,23 @@ const addService = async () => {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status === 201) {
+      toast.success('Service added successfully!', {
+        autoClose: 1000
+      })
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
     serviceList.value.push(response.data)
     newService.value.title = ''
     newService.value.description = ''
     newService.value.image = null
-    window.location.reload()
   } catch (error) {
-    console.error('Error adding service:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
@@ -198,29 +215,48 @@ const updateService = async (service) => {
   }
 
   try {
-    await axios.put(`${apiEndpoint}/admin/our-services/${service._id}`, formData, {
+    const response = await axios.put(`${apiEndpoint}/admin/our-services/${service._id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
       }
     })
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Service updated successfully!', {
+        autoClose: 1000
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
+    }
   } catch (error) {
-    console.error('Error updating service:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
 const deleteService = async (id) => {
   try {
-    await axios.delete(`${apiEndpoint}/admin/our-services/${id}`, {
+    const response = await axios.delete(`${apiEndpoint}/admin/our-services/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     serviceList.value = serviceList.value.filter((service) => service.id !== id)
-    window.location.reload()
+    if (response.status === 200) {
+      toast.success('Service deleted successfully!', {
+        autoClose: 1000
+      })
+    }
   } catch (error) {
-    console.error('Error deleting service:', error)
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
+    }
   }
 }
 
