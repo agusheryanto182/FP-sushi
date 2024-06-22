@@ -6,6 +6,8 @@ const {
   jwtRefreshTokenExpiration,
 } = require('../config');
 
+const customError = require('../errors');
+
 const createJWT = ({ payload }) => {
   const token = jwt.sign(payload, jwtSecret, {
     expiresIn: jwtExpiration,
@@ -19,7 +21,20 @@ const createRefreshJWT = ({ payload }) => {
   return token;
 };
 
-const isTokenValid = ({ token }) => jwt.verify(token, jwtSecret);
+const isTokenValid = ({ token }) => {
+  try {
+    const result = jwt.verify(token, jwtSecret);
+    if (!result) {
+      throw new customError.UnauthenticatedError('failed to verify token');
+    }
+    return result;
+  } catch (err) {
+    if (err instanceof customError.UnauthenticatedError) {
+      throw err;
+    }
+    throw new customError.UnauthenticatedError('failed to verify token : ' + err);
+  }
+};
 const isTokenValidRefreshToken = ({ token }) =>
   jwt.verify(token, jwtRefreshTokenSecret);
 
