@@ -162,14 +162,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from '../axios.js'
-import Api from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 const apiEndpoint = '/api/v1'
-const baseURL = Api.defaults.baseURL
+const baseURL = axios.defaults.baseURL
 
 const newSushi = ref({ name: '', category: 'food', price: 0, image: null })
 const sushiList = ref([])

@@ -115,11 +115,10 @@ import { ref, onMounted } from 'vue'
 import axios from '../axios.js'
 import TheNavbar from '../components/TheNavbar.vue'
 import TheSidebar from '../components/TheSidebar.vue'
-import Api from '../axios.js'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-const baseURL = Api.defaults.baseURL
+const baseURL = axios.defaults.baseURL
 
 const apiEndpoint = '/api/v1'
 

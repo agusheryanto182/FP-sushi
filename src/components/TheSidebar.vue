@@ -71,7 +71,18 @@
         <li>
           <a class="text-white hover:text-gray-900" href="/our-service">Our Service Management</a>
         </li>
-        <li><a class="text-white hover:text-gray-900" href="/our-team">Our Team Management</a></li>
+        <li>
+          <button
+            @click="toggleOurTeamSubmenu"
+            class="text-white hover:text-gray-900 w-full text-left"
+          >
+            Our Team Management
+          </button>
+          <ul v-if="isHomeSubOurTeamOpen" class="ml-4 space-y-2">
+            <li><a class="text-white hover:text-gray-900" href="/our-team">Our Team</a></li>
+            <li><a class="text-white hover:text-gray-900" href="/task">Task</a></li>
+          </ul>
+        </li>
         <li><a class="text-white hover:text-gray-900" href="/contact">Contact Management</a></li>
         <!-- Logout button -->
         <li>
@@ -90,6 +101,7 @@ import router from '@/router'
 
 const isOpen = ref(false)
 const isHomeSubmenuOpen = ref(false)
+const isHomeSubOurTeamOpen = ref(false)
 
 const toggleSidebar = () => {
   isOpen.value = !isOpen.value
@@ -99,6 +111,10 @@ const toggleHomeSubmenu = () => {
   isHomeSubmenuOpen.value = !isHomeSubmenuOpen.value
 }
 
+const toggleOurTeamSubmenu = () => {
+  isHomeSubOurTeamOpen.value = !isHomeSubOurTeamOpen.value
+}
+
 const logout = () => {
   // Implement logout logic here
   // For example, clearing local storage, removing tokens, etc.
@@ -106,7 +122,7 @@ const logout = () => {
 
   localStorage.clear()
   sessionStorage.clear()
-  router.push('/login') // Adjust the route as per your application's logout logic
+  router.push('/login')
 }
 </script>
 
