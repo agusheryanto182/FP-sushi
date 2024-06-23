@@ -67,10 +67,9 @@
             <li><a class="text-white hover:text-gray-900" href="/offer">Offer</a></li>
           </ul>
         </li>
+        <li><a class="text-white hover:text-gray-900" href="/user">User Management</a></li>
+        <li><a class="text-white hover:text-gray-900" href="/about">About Management</a></li>
         <li><a class="text-white hover:text-gray-900" href="/order">Order Management</a></li>
-        <li>
-          <a class="text-white hover:text-gray-900" href="/our-service">Our Service Management</a>
-        </li>
         <li>
           <button
             @click="toggleOurTeamSubmenu"
@@ -82,6 +81,9 @@
             <li><a class="text-white hover:text-gray-900" href="/our-team">Our Team</a></li>
             <li><a class="text-white hover:text-gray-900" href="/task">Task</a></li>
           </ul>
+        </li>
+        <li>
+          <a class="text-white hover:text-gray-900" href="/our-service">Our Service Management</a>
         </li>
         <li><a class="text-white hover:text-gray-900" href="/contact">Contact Management</a></li>
         <!-- Logout button -->

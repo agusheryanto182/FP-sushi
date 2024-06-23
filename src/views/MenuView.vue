@@ -49,13 +49,24 @@
             />
           </div>
           <div class="mb-4">
-            <label for="image" class="block text-sm font-medium text-gray-700">Sushi Image</label>
+            <label for="image" class="block text-sm font-medium text-gray-700">Menu Image</label>
             <input
               @change="onFileChange"
               type="file"
               id="image"
               accept="image/*"
               class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="rank" class="block text-sm font-medium text-gray-700">Menu Rank</label>
+            <input
+              v-model="newSushi.rank"
+              type="number"
+              id="rank"
+              placeholder="0 - 5"
+              class="mt-1 block w-full border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
@@ -91,6 +102,11 @@
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Image
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Rank
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -134,6 +150,12 @@
                     type="file"
                     accept="image/*"
                     class="mt-2 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <input
+                    v-model="sushi.rank"
+                    class="border p-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -198,6 +220,7 @@ const addSushi = async () => {
   formData.append('category', newSushi.value.category)
   formData.append('price', newSushi.value.price)
   formData.append('image', newSushi.value.image)
+  formData.append('rank', newSushi.value.rank)
 
   try {
     const response = await axios.post(`${apiEndpoint}/admin/product/create`, formData, {
@@ -220,6 +243,7 @@ const addSushi = async () => {
     newSushi.value.category = 'food'
     newSushi.value.price = 0
     newSushi.value.image = null
+    newSushi.value.rank = 0
   } catch (error) {
     if (error.response.status) {
       toast.error(error.response.data.msg, {
@@ -237,6 +261,7 @@ const updateSushi = async (sushi) => {
   if (sushi.image) {
     formData.append('image', sushi.image)
   }
+  formData.append('rank', sushi.rank)
 
   try {
     const response = await axios.put(`${apiEndpoint}/admin/product/${sushi.id}`, formData, {
@@ -256,8 +281,10 @@ const updateSushi = async (sushi) => {
   } catch (error) {
     if (error.response.status) {
       toast.error(error.response.data.msg, {
-        autoClose: 1000
+        autoClose: 2000
       })
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
     }
   }
 }

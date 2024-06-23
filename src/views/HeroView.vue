@@ -202,8 +202,10 @@ const updateHero = async (hero) => {
   } catch (error) {
     if (error.response.status) {
       toast.error(error.response.data.msg, {
-        autoClose: 1000
+        autoClose: 2000
       })
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      window.location.reload()
     }
   }
 }

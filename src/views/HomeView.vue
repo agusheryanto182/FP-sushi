@@ -5,19 +5,13 @@
       <TheSidebar />
       <main class="flex-1 p-4">
         <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-white p-4 shadow rounded-lg">
-            <h2 class="text-lg font-semibold mb-2">Summary</h2>
-            <p>Some summary information here...</p>
-          </div>
-          <div class="bg-white p-4 shadow rounded-lg">
-            <h2 class="text-lg font-semibold mb-2">Recent Activities</h2>
-            <ul>
-              <li>Activity 1</li>
-              <li>Activity 2</li>
-              <li>Activity 3</li>
-            </ul>
-          </div>
+        <div v-for="user in users" :key="user.id" class="bg-white p-4 shadow rounded-lg mb-4">
+          <p><strong>Name:</strong> {{ user.name || 'N/A' }}</p>
+          <p><strong>Email:</strong> {{ user.email || 'N/A' }}</p>
+          <p>
+            <strong>Last Login:</strong>
+            {{ user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A' }}
+          </p>
         </div>
       </main>
     </div>
@@ -32,7 +26,8 @@ import axios from '../axios.js'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-const user = ref(null)
+const token = localStorage.getItem('token')
+const users = ref({})
 
 toast.success('Welcome To Suki Sushi', {
   autoClose: 1000
@@ -40,8 +35,13 @@ toast.success('Welcome To Suki Sushi', {
 
 const fetchUser = async () => {
   try {
-    const response = await axios.get('/api/v1/user')
-    user.value = response.data.data
+    const response = await axios.get('/api/v1/admin', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    console.log(response)
+    users.value = response.data.data
   } catch (error) {
     console.error('Error fetching user data:', error)
   }

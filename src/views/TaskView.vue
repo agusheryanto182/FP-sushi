@@ -203,11 +203,7 @@ const editingTaskId = ref(null)
 
 const fetchTaskList = async () => {
   try {
-    const response = await axios.get(`${apiEndpoint}/task`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.get(`${apiEndpoint}/task`)
 
     taskList.value = response.data.data.map((task) => {
       task.id = task._id
@@ -215,18 +211,12 @@ const fetchTaskList = async () => {
       return task
     })
 
-    const responseOurTeam = await axios.get(`${apiEndpoint}/our-team`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const responseOurTeam = await axios.get(`${apiEndpoint}/our-team`)
 
     teamList.value = responseOurTeam.data.data.map((member) => {
       member.id = member._id
       return member
     })
-
-    // updateTaskListWithDeveloperNames()
   } catch (error) {
     if (error.response.status) {
       toast.error(error.response.data.msg, {

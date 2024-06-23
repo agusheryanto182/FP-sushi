@@ -199,11 +199,7 @@ const token = localStorage.getItem('token')
 
 const fetchTeamList = async () => {
   try {
-    const response = await axios.get(`${apiEndpoint}/our-team`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.get(`${apiEndpoint}/our-team`)
 
     teamList.value = response.data.data.map((member) => {
       member.id = member._id
@@ -263,9 +259,6 @@ const updateMember = async (member) => {
   if (member.image) {
     formData.append('image', member.image)
   }
-
-  console.log('member')
-  console.log(member)
 
   try {
     const response = await axios.put(`${apiEndpoint}/admin/our-team/${member.id}`, formData, {

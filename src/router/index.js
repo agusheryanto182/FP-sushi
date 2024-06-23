@@ -10,7 +10,9 @@ import OurService from '../views/OurServiceView.vue'
 import Contact from '../views/ContactView.vue'
 import OurTeam from '../views/OurTeamView.vue'
 import Task from '../views/TaskView.vue'
+import About from '../views/AboutView.vue'
 import axios from '../axios.js';
+import User from '../views/UserView.vue';
 const baseURL = axios.defaults.baseURL
 
 const routes = [
@@ -24,6 +26,8 @@ const routes = [
   { path: '/contact', component: Contact, meta: { requiresAuth: true } },
   { path: '/our-team', component: OurTeam, meta: { requiresAuth: true } },
   { path: '/task', component: Task, meta: { requiresAuth: true } },
+  { path: '/about', component: About, meta: { requiresAuth: true } },
+  { path: '/user', component: User, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
