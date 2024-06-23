@@ -2,35 +2,27 @@ const customError = require('../../errors');
 const productRepo = require('../../repositories/productRepo');
 const imageService = require('../mongoose/imagesService');
 
-const CreateProduct = async (name, price, category, imageUrl) => {
-    const isNameExists = await productRepo.GetProductByName(name);
-    if (isNameExists) {
-        throw new customError.ConflictError('product name already exists');
+const CreateProduct = async (name, price, category, imageUrl, rank) => {
+    const resProduct = await productRepo.GetAllProducts();
+
+    if (rank !== '0') {
+        const checkProduct = resProduct.some(product => String(product.name) === String(name) || String(product.rank) === rank);
+        if (checkProduct) {
+            throw new customError.ConflictError('product already exists');
+        }
     }
 
-    const product = await productRepo.CreateProduct({ name, price, category, imageUrl });
+    const product = await productRepo.CreateProduct({ name, price, category, imageUrl, rank });
     return product;
 };
 
-const GetAllProducts = async (id, name, price, category) => {
+const GetAllProducts = async (id) => {
     if (id) {
         return await productRepo.GetProductById(id);
     }
 
-    const query = {};
-    if (name) {
-        query.name = { $regex: new RegExp('^' + name, 'i') };
-    }
-    if (price) {
-        query.price = { $gte: price };
-    }
-    if (category) {
-        query.category = { $regex: new RegExp('^' + category, 'i') };
-    }
-
-
-    const result = await productRepo.GetAllProducts(query);
-    return result.sort((a, b) => b.createdAt - a.createdAt);
+    const result = await productRepo.GetAllProducts();
+    return result;
 };
 
 const DeleteProduct = async (id) => {
@@ -40,7 +32,8 @@ const DeleteProduct = async (id) => {
     return result;
 };
 
-const UpdateProduct = async (id, name, price, category, imageUrl) => {
+const UpdateProduct = async (id, name, price, category, imageUrl, rank) => {
+    console.log(rank)
     const productOld = await productRepo.GetProductById(id);
 
     const isNameExists = await productRepo.GetProductByName(name);
@@ -48,7 +41,15 @@ const UpdateProduct = async (id, name, price, category, imageUrl) => {
         throw new customError.ConflictError('product name already exists');
     }
 
-    const result = await productRepo.UpdateProduct(id, name, price, category, imageUrl);
+    if (rank !== '0') {
+        const resProduct = await productRepo.GetAllProducts();
+        const checkProduct = resProduct.some(product => String(product.rank) === String(rank));
+        if (checkProduct) {
+            throw new customError.ConflictError('product rank already exists');
+        }
+    }
+
+    const result = await productRepo.UpdateProduct(id, name, price, category, imageUrl, rank);
 
     if (imageUrl) {
         imageService.deleteImage(productOld.imageUrl);

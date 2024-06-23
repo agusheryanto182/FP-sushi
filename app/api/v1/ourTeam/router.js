@@ -12,7 +12,6 @@ const multerHandler = (req, res, next) => {
 };
 
 router.get('/our-team', ourTeamCtrl.getOurTeam);
-router.get('/our-team/:id', ourTeamCtrl.getOurTeam);
 router.put('/admin/our-team/:id', auth.authenticateUser, auth.authorizeRoles('admin'), multerHandler, ourTeamCtrl.updateOurTeamCMS);
 router.post('/admin/our-team', auth.authenticateUser, auth.authorizeRoles('admin'), multerHandler, ourTeamCtrl.createOurTeamCMS);
 router.delete('/admin/our-team/:id', auth.authenticateUser, auth.authorizeRoles('admin'), ourTeamCtrl.deleteOurTeamCMS);

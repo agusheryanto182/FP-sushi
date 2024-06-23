@@ -62,10 +62,12 @@ const DeleteAdminCMS = async (req, res, next) => {
 
 const UpdateAdminCMS = async (req, res, next) => {
     const { id } = req.params;
-    const { name, email, password, confirmPassword, phone } = req.body;
+    const { name, email, password, phone } = req.body;
+
+    console.log(name, email, password, phone);
 
     try {
-        if (!name || !email || !password || !confirmPassword || !phone) {
+        if (!name || !email || !password || !phone) {
             throw new customError.BadRequestError('all fields are required');
         }
     } catch (err) {
@@ -75,7 +77,6 @@ const UpdateAdminCMS = async (req, res, next) => {
     // validation
     await body('name').isString().withMessage('name must be a string').run(req);
     await body('password').isLength({ min: 6 }).withMessage('password must be at least 6 characters').run(req);
-    await body('confirmPassword').isLength({ min: 6 }).withMessage('confirmPassword must be at least 6 characters').run(req);
     await body('email').isEmail().withMessage('invalid email').run(req);
     await body('phone').isMobilePhone().withMessage('invalid phone number').run(req);
     const errors = validationResult(req);
@@ -85,9 +86,6 @@ const UpdateAdminCMS = async (req, res, next) => {
             throw new customError.BadRequestError(errors.array()[0].msg);
         }
 
-        if (password !== confirmPassword) {
-            throw new customError.BadRequestError('passwords do not match');
-        }
         const result = await userService.UpdateAdmin(id, name, email, password, phone, 'admin');
         res.status(StatusCodes.OK).json({
             data: result

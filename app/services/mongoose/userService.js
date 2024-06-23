@@ -24,10 +24,6 @@ const CreateAdmin = async (name, email, password, phone) => {
 const GetAdmin = async (name) => {
     const result = await userRepo.GetAdmin(name);
 
-    for (let i = 0; i < result.length; i++) {
-        delete result[i]._doc.password;
-    }
-
     return result;
 };
 

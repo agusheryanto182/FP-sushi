@@ -1,9 +1,9 @@
 const customError = require('../errors');
 const Product = require('../api/v1/products/model');
 
-const CreateProduct = async ({ name, price, category, imageUrl }) => {
+const CreateProduct = async ({ name, price, category, imageUrl, rank }) => {
     try {
-        const product = await Product.create({ name, price, category, imageUrl });
+        const product = await Product.create({ name, price, category, imageUrl, rank });
         return product;
     } catch (err) {
         throw new customError.InternalServerError(err);
@@ -22,9 +22,9 @@ const GetProductByName = async (name) => {
     }
 };
 
-const GetAllProducts = async (query) => {
+const GetAllProducts = async () => {
     try {
-        const products = await Product.find(query);
+        const products = await Product.find().sort({ rank: -1 });
         return products;
     } catch (err) {
         throw new customError.InternalServerError(err);
@@ -46,9 +46,9 @@ const DeleteProduct = async (id) => {
     }
 };
 
-const UpdateProduct = async (id, name, price, category, imageUrl) => {
+const UpdateProduct = async (id, name, price, category, imageUrl, rank) => {
     try {
-        const product = await Product.findByIdAndUpdate(id, { name, price, category, imageUrl }, { new: true });
+        const product = await Product.findByIdAndUpdate(id, { name, price, category, imageUrl, rank }, { new: true });
         if (!product) {
             throw new customError.NotFoundError('product not found');
         }

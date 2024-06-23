@@ -4,7 +4,7 @@ const customError = require('../errors');
 
 const Create = async ({ name, email, password, phone, role }) => {
     try {
-        const user = await Users.create({ name, email, password, phone, role });
+        const user = await Users.create({ name, email, password, phone, role, lastLogin: new Date() });
         return user;
     } catch (err) {
         throw new customError.InternalServerError(err);
@@ -38,7 +38,7 @@ const GetAdmin = async (name) => {
             query = { role: 'admin' };
         }
 
-        const user = await Users.find(query).sort({ createdAt: -1 });
+        const user = await Users.find(query).sort({ lastLogin: -1 });
 
         return user;
     } catch (err) {

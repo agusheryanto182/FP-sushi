@@ -15,4 +15,17 @@ const GetUserByEmail = async (email) => {
         throw new customError.InternalServerError(err);
     }
 };
-module.exports = { GetUserByEmail };
+
+const UpdateLastLogin = async (email) => {
+    try {
+        const result = await Users.findOneAndUpdate({ email }, { lastLogin: new Date() }, { new: true });
+        return result;
+    } catch (err) {
+        throw new customError.InternalServerError(err);
+    }
+};
+
+module.exports = {
+    GetUserByEmail,
+    UpdateLastLogin
+};
