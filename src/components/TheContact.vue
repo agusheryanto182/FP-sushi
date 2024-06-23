@@ -17,8 +17,7 @@
                 href="https://www.google.com/maps/place/Universitas+Amikom+Yogyakarta/@-7.7599044,110.4064691,17z/data=!3m1!4b1!4m5!3m4!1s0x2e7a599bd3bdc4ef:0x6f1714b0c4544586!8m2!3d-7.7599044!4d110.4086578"
                 target="_blank"
               >
-                Universitas Amikom Yogyakarta, Jl. Ring Road Utara, Ngringin, Condongcatur, Kec.
-                Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281
+                {{ contact.address }}
               </a>
             </p>
           </div>
@@ -26,13 +25,17 @@
         <div class="box">
           <div class="text">
             <h3>Phone</h3>
-            <p><a href="https://wa.me/6281327179505">+62-813-2717-9505</a></p>
+            <p>
+              <a :href="`https://wa.me/${contact.phone}`">{{ contact.phone }}</a>
+            </p>
           </div>
         </div>
         <div class="box">
           <div class="text">
             <h3>Email</h3>
-            <p><a href="mailto:sukisushi@yahoo.com">sukisushi@yahoo.com</a></p>
+            <p>
+              <a :href="`mailto:${contact.email}`">{{ contact.email }}</a>
+            </p>
           </div>
         </div>
       </div>
@@ -72,10 +75,27 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ContactUs'
+<script setup>
+import Api from '../axios'
+import { ref, onMounted } from 'vue'
+
+const apiEndpoint = '/api/v1'
+const contact = ref({ address: '', email: '', phone: '' })
+
+const fetchContact = async () => {
+  try {
+    const response = await Api.get(`${apiEndpoint}/contact`)
+
+    contact.value.id = response.data.data._id
+    contact.value.address = response.data.data.address
+    contact.value.email = response.data.data.email
+    contact.value.phone = response.data.data.phone
+  } catch (error) {
+    console.error('Error fetching contact list:', error)
+  }
 }
+
+onMounted(fetchContact)
 </script>
 
 <style scoped>

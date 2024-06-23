@@ -14,11 +14,9 @@
         <div class="col-lg-3 col-md-6">
           <h3>Best Seller</h3>
           <ul>
-            <li><a @click.prevent="openNewTab" href="/checkout">Sushi</a></li>
-            <li><a @click.prevent="openNewTab" href="/checkout">Sushi Rolls</a></li>
-            <li><a @click.prevent="openNewTab" href="/checkout">Sushi With Karaage</a></li>
-            <li><a @click.prevent="openNewTab" href="/checkout">Strawberry Mix</a></li>
-            <li><a @click.prevent="openNewTab" href="/checkout">Salmon V5</a></li>
+            <li v-for="(sushi, index) in sushiList.slice(0, 5)" :key="index">
+              <a @click.prevent="openNewTab" :href="'/checkout/' + sushi.id">{{ sushi.name }}</a>
+            </li>
           </ul>
         </div>
 
@@ -46,13 +44,35 @@
   </footer>
 </template>
 
-<script>
-export default {
-  methods: {
-    openNewTab() {
-      const routeData = this.$router.resolve({ path: '/checkout' })
-      window.open(routeData.href, '_blank')
+<script setup>
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import axios from '../axios.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+
+const sushiList = ref([])
+const router = useRouter()
+
+const fetchSushiList = async () => {
+  try {
+    const response = await axios.get('/api/v1/product')
+    sushiList.value = response.data.data.map((sushi) => {
+      return sushi
+    })
+  } catch (error) {
+    if (error.response.status) {
+      toast.error(error.response.data.msg, {
+        autoClose: 1000
+      })
     }
   }
 }
+
+const openNewTab = () => {
+  const routeData = router.resolve({ path: '/checkout' })
+  window.open(routeData.href, '_blank')
+}
+
+onMounted(fetchSushiList)
 </script>
