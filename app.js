@@ -15,6 +15,7 @@ const offerRouter = require('./app/api/v1/offers/router');
 const heroRouter = require('./app/api/v1/hero/router');
 const ourServiceRouter = require('./app/api/v1/ourService/router');
 const contactRouter = require('./app/api/v1/contact/router');
+const ourTeamRouter = require('./app/api/v1/ourTeam/router');
 
 const v1 = '/api/v1';
 
@@ -41,6 +42,7 @@ app.use(`${v1}`, offerRouter);
 app.use(`${v1}`, heroRouter);
 app.use(`${v1}`, ourServiceRouter);
 app.use(`${v1}`, contactRouter);
+app.use(`${v1}`, ourTeamRouter);
 
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);

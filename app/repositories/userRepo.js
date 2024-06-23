@@ -86,6 +86,15 @@ const GetUserByEmail = async (email, role) => {
     }
 };
 
+const GetUserById = async (id) => {
+    try {
+        const user = await Users.findOne({ _id: id });
+        return user;
+    } catch (err) {
+        throw new customError.InternalServerError(err);
+    }
+};
+
 
 module.exports = {
     Create,
@@ -94,5 +103,6 @@ module.exports = {
     DeleteAdmin,
     UpdateAdmin,
     GetUserByEmail,
-    CheckPhone
+    CheckPhone,
+    GetUserById
 }

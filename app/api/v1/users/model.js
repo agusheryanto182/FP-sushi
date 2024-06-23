@@ -24,10 +24,6 @@ const userSchema = new mongoose.Schema(
             required: [true, 'phone number is required'],
             maxlength: 20,
         },
-        address: {
-            type: String,
-            maxlength: 225,
-        },
         role: {
             type: String,
             enum: ['admin', 'user'],

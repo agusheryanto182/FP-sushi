@@ -97,10 +97,23 @@ const UpdateAdminCMS = async (req, res, next) => {
     }
 };
 
+const GetUserByIdCMS = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const result = await userService.GetUserById(id);
+        res.status(StatusCodes.OK).json({
+            data: result
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     createAdminCms,
     GetAdminCMS,
     DeleteAdminCMS,
-    UpdateAdminCMS
+    UpdateAdminCMS,
+    GetUserByIdCMS
 };

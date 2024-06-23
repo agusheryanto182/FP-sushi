@@ -41,12 +41,19 @@ const DeleteProduct = async (id) => {
 };
 
 const UpdateProduct = async (id, name, price, category, imageUrl) => {
+    const productOld = await productRepo.GetProductById(id);
+
     const isNameExists = await productRepo.GetProductByName(name);
     if (isNameExists.name === name && isNameExists.id !== id) {
         throw new customError.ConflictError('product name already exists');
     }
 
     const result = await productRepo.UpdateProduct(id, name, price, category, imageUrl);
+
+    if (imageUrl) {
+        imageService.deleteImage(productOld.imageUrl);
+    }
+
     return result;
 };
 

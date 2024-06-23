@@ -63,9 +63,21 @@ const UpdateAdmin = async (id, name, email, password, phone, role) => {
     return result;
 };
 
+const GetUserById = async (id) => {
+    const result = await userRepo.GetUserById(id);
+
+    if (!result) {
+        throw new customError.NotFoundError('user not found');
+    }
+
+    delete result._doc.password;
+    return result;
+};
+
 module.exports = {
     CreateAdmin,
     GetAdmin,
     DeleteAdmin,
-    UpdateAdmin
+    UpdateAdmin,
+    GetUserById,
 };
