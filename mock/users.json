@@ -7,8 +7,8 @@
     "email": "agusheryanto@gmail.com",
     "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
     "phone": "081234567890",
-    "address": "Jl. Raya Pahlawan No. 1",
     "role": "admin",
+    "lastLogin": "2022-11-08T23:59:59.000Z",
     "created_at": {
       "$date": {
         "$numberLong": "1667105100000"
