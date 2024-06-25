@@ -2,7 +2,7 @@ import axios from 'axios';
 import router from '@/router';
 
 const Api = axios.create({
-    baseURL: 'https://www.sukisuhi.works',
+    baseURL: 'https://www.sukisushi.works',
 });
 
 Api.interceptors.response.use(
