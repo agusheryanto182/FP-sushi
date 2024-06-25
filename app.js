@@ -22,7 +22,9 @@ const v1 = '/api/v1';
 
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handler-error');
-app.use(cors());
+app.use(cors({
+    origin: '*',
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
