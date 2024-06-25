@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Api = axios.create({
-    baseURL: 'http://localhost:9000',
+    baseURL: 'http://server.sukisuhi.works',
 })
 
 export default Api
