@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suki Sushi</title>
+</head>
+
+<body>
+    <div style="
+        font-family: Helvetica, Arial, sans-serif;
+        min-width: 1000px;
+        overflow: auto;
+        line-height: 2;
+      ">
+        <div style="margin: 50px auto; width: 70%; padding: 20px 0">
+            <div style="border-bottom: 1px solid #eee">
+                <a href="" style="
+              font-size: 1.4em;
+              color: #00466a;
+              text-decoration: none;
+              font-weight: 600;
+            ">Suki Sushi</a>
+            </div>
+            <p style="font-size: 1.1em">Hi {{name}},</p>
+            <p>Selamat! Transaksi Anda telah masuk ke sistem kami. Silahkan menunggu pesanan nya datang, semoga sehat
+                selalu. Berikut adalah detail pesanan Anda:</p>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Nama</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{name}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Alamat</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{address}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Phone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{phoneNumber}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Total Harga</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{totalPrice}}</td>
+                </tr>
+            </table>
+            <p style="font-size: 0.9em">Regards,<br />Suki Sushi</p>
+            <hr style="border: none; border-top: 1px solid #eee" />
+            <div style="
+            float: right;
+            padding: 8px 0;
+            color: #aaa;
+            font-size: 0.8em;
+            line-height: 1;
+            font-weight: 300;
+          ">
+                <p>Suki Sushi</p>
+                <p>CS</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
