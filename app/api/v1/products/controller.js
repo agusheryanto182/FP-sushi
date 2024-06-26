@@ -8,11 +8,10 @@ const createProductCms = async (req, res, next) => {
     const { name, price, category, rank } = req.body;
     // validation
     await body('name').isString().withMessage('name must be a string').run(req);
-    await body('price').isNumeric().withMessage('price must be a number').run(req);
+    await body('price').isNumeric({ min: 1 }).withMessage('price must be a number').run(req);
     await body('category').isString().withMessage('category must be a string').run(req);
     await body('rank').isInt({ min: 0, max: 5 }).withMessage('rank must be an integer between 0 and 5').run(req);
     const errors = validationResult(req);
-
 
     try {
         if (!name || !price || !category || !rank) {
@@ -30,11 +29,6 @@ const createProductCms = async (req, res, next) => {
         if (!errors.isEmpty()) {
             throw new customError.BadRequestError(errors.array()[0].msg);
         }
-    } catch (err) {
-        next(err);
-    }
-
-    try {
         const resultImages = await imageService.generateUrlImage({ file: req.file });
 
         if (!resultImages) {
