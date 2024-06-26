@@ -6,11 +6,7 @@
           <h1><strong>Thank You</strong></h1>
         </div>
         <div class="content">
-          <h2>Your order has been successful, please check your email</h2>
-          <p>
-            We really appreciate that, please wait for the food to come to your place. May you
-            always be healthy
-          </p>
+          <h2>Your order has been recorded, please check your email</h2>
           <div class="social-icons">
             <a href="https://www.facebook.com" class="social-icon"
               ><i class="fab fa-facebook-f"></i
