@@ -1,12 +1,96 @@
 [
   {
     "_id": {
-      "$oid": "62cfe35e8ad11e7a5e240f28"
+      "$oid": "62cfe35e8ad11e7a5e240f29"
     },
-    "name": "Agus Heryanto",
-    "email": "agusheryanto@gmail.com",
+    "name": "Agus Heryanto1",
+    "email": "agusheryanto1@gmail.com",
     "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
-    "phone": "081234567890",
+    "phone": "0812345678901",
+    "role": "admin",
+    "lastLogin": "2022-11-08T23:59:59.000Z",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    },
+    "updated_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "62cfe35e8ad11e7a5e240f30"
+    },
+    "name": "Ihwan",
+    "email": "ihwan@gmail.com",
+    "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
+    "phone": "0812345678902",
+    "role": "admin",
+    "lastLogin": "2022-11-08T23:59:59.000Z",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    },
+    "updated_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "62cfe35e8ad11e7a5e240f31"
+    },
+    "name": "Adit",
+    "email": "adit@gmail.com",
+    "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
+    "phone": "0812345678903",
+    "role": "admin",
+    "lastLogin": "2022-11-08T23:59:59.000Z",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    },
+    "updated_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "62cfe35e8ad11e7a5e240f32"
+    },
+    "name": "bagas",
+    "email": "bagas@gmail.com",
+    "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
+    "phone": "0812345678903",
+    "role": "admin",
+    "lastLogin": "2022-11-08T23:59:59.000Z",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    },
+    "updated_at": {
+      "$date": {
+        "$numberLong": "1667105100000"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "62cfe35e8ad11e7a5e240f33"
+    },
+    "name": "faiz",
+    "email": "faiz@gmail.com",
+    "password": "$2y$10$3ZKyzix6tMBldJUQKQYEkOtS4.CBUc0vc0xarsX.b7kPVNxAsd53O",
+    "phone": "0812345678904",
     "role": "admin",
     "lastLogin": "2022-11-08T23:59:59.000Z",
     "created_at": {
