@@ -53,18 +53,18 @@
     </div>
 
     <div class="contactForm">
-      <form>
+      <form @submit.prevent="sendEmail">
         <h2>Send Message</h2>
         <div class="inputBox">
-          <input type="text" name="name" required="required" />
+          <input v-model="emailData.name" type="text" name="name" required="required" />
           <span>Full Name</span>
         </div>
         <div class="inputBox">
-          <input type="email" name="email" required="required" />
+          <input v-model="emailData.email" type="email" name="email" required="required" />
           <span>Email</span>
         </div>
         <div class="inputBox">
-          <textarea name="message" required="required"></textarea>
+          <textarea v-model="emailData.message" name="message" required="required"></textarea>
           <span>Type your message..</span>
         </div>
         <div class="inputBox">
@@ -78,9 +78,12 @@
 <script setup>
 import Api from '../axios'
 import { ref, onMounted } from 'vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const apiEndpoint = '/api/v1'
 const contact = ref({ address: '', email: '', phone: '' })
+const emailData = ref({ name: '', email: '', message: '' })
 
 const fetchContact = async () => {
   try {
@@ -92,6 +95,23 @@ const fetchContact = async () => {
     contact.value.phone = response.data.data.phone
   } catch (error) {
     console.error('Error fetching contact list:', error)
+  }
+}
+
+const sendEmail = async () => {
+  try {
+    const response = await Api.post(`${apiEndpoint}/send-email`, emailData.value)
+    if (response.status === 201) {
+      toast.success('Email sent successfully!', {
+        autoClose: 1000
+      })
+      emailData.value = { name: '', email: '', message: '' }
+    }
+  } catch (error) {
+    toast.error('Failed to send email', {
+      autoClose: 1000
+    })
+    console.error('Error sending email:', error)
   }
 }
 
