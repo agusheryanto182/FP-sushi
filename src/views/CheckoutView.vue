@@ -349,40 +349,13 @@ const sendOrderToApi = async () => {
     }
 
     const response = await axios.post('/api/v1/checkout', orderData)
-    console.log('Midtrans API response:', response.data)
 
     const transactionToken = response.data.token
     if (!transactionToken) {
       throw new Error('Failed to obtain transaction token from Midtrans')
     }
 
-    window.snap.pay(transactionToken, {
-      onSuccess: function (result) {
-        // Handle successful payment status
-        if (result.transaction_status === 'settlement') {
-          // Payment is successful, perform necessary actions
-          console.log('Payment is successfully.')
-
-          // Reset form fields after successful submission
-          customer.name = ''
-          customer.address = ''
-          customer.phone = ''
-          customer.email = ''
-          products.splice(0, products.length, { id: '', quantity: 1 })
-
-          // Optionally, navigate to a success page or perform other actions
-        }
-      },
-      onPending: function (result) {
-        console.log('Payment pending:', result)
-      },
-      onError: function (result) {
-        console.error('Payment error:', result)
-      },
-      onClose: function () {
-        console.log('Payment popup closed without finishing the payment')
-      }
-    })
+    window.snap.pay(transactionToken)
   } catch (error) {
     console.error('Error placing order:', error)
     if (error.response) {
