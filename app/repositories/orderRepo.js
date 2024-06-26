@@ -59,10 +59,26 @@ const deleteOrderCMS = async (id) => {
     }
 }
 
+const GetOrderById = async (id) => {
+    try {
+        const result = await Order.findById(id);
+        if (!result) {
+            throw new customError.NotFoundError('order not found');
+        }
+        return result;
+    } catch (err) {
+        if (err instanceof customError.NotFoundError) {
+            throw err;
+        }
+        throw new customError.InternalServerError(err);
+    }
+};
+
 module.exports = {
     CreateOrder,
     updateStatusPayment,
     GetAllOrders,
     updateOrderCMS,
-    deleteOrderCMS
+    deleteOrderCMS,
+    GetOrderById
 };

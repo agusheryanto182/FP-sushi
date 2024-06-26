@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 const { gmail, password } = require('../../config');
+const Mustache = require('mustache');
+const fs = require('fs');
+
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -27,4 +30,17 @@ const sendEmail = async (name, email, message) => {
     });
 }
 
-module.exports = { sendEmail }
+const sendEmailTemplate = async (email, data) => {
+    let template = fs.readFileSync('app/views/email/index.html', 'utf8');
+    const mailOptions = {
+        from: gmail,
+        to: email,
+        subject: `Transaksi anda di Suki Sushi telah berhasil`,
+        html: Mustache.render(template, data),
+    };
+    const result = await transporter.sendMail(mailOptions);
+    return result;
+}
+
+
+module.exports = { sendEmail, sendEmailTemplate }

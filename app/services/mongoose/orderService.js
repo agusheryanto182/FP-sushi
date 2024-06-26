@@ -1,6 +1,7 @@
 const config = require('../../config');
 const midtransClient = require('midtrans-client');
 const orderRepo = require('../../repositories/orderRepo');
+const emailService = require('../../services/mail/emailService');
 
 const createOrder = async (name, address, phoneNumber, email, productDetails, totalPrice) => {
     const result = await orderRepo.CreateOrder(name, address, phoneNumber, email, productDetails, totalPrice);
@@ -29,6 +30,12 @@ const midtransWebHook = async (transaction_status, order_id) => {
     if (transaction_status === 'settlement') {
         const statusPayment = true;
         const result = await orderRepo.updateStatusPayment(order_id, statusPayment);
+        const data = await orderRepo.GetOrderById(order_id);
+
+        // send email
+        const resultEmail = await emailService.sendEmailTemplate(data.email, data);
+
+        console.log('resultEmail : ', resultEmail);
         return result;
     }
 }
